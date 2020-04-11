@@ -1,0 +1,7 @@
+{
+	"files.exclude": {
+		"Z:/GIT_Workspace/UE4_1_BattleTankGame/BattleTank/.vscode": true,
+		"Z:/GIT_Workspace/UE4_1_BattleTankGame/BattleTank/Content": true,
+		"Z:/GIT_Workspace/UE4_1_BattleTankGame/BattleTank/Intermediate": true
+	}
+}
