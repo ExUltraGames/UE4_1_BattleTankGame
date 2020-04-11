@@ -27,3 +27,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 
 ## Commits
 * BT01_UE4 Game Design Document (GDD)
+* BT01_UE4 Iterative Cycle (IC)
