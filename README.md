@@ -29,3 +29,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT01_UE4 Game Design Document (GDD)
 * BT02_UE4 Iterative Cycle (IC)
 * BT03_UE4 Unreal File Creation
+* BT04_UE4 Landscape Creation
+* BT05_UE4 Tank Creation & Binding
