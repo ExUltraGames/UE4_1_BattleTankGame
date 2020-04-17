@@ -31,3 +31,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT03_UE4 Unreal File Creation
 * BT04_UE4 Landscape Creation
 * BT05_UE4 Tank Creation & Binding
+* BT06_UE4 Fix 3rd Person Camera
