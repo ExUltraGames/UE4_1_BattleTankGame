@@ -17,6 +17,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController // atankpl
 	
 public:
 	ATank* GetControlledTank() const; // pointer to a Tank
+	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override; //checks in hieracy for beginplay
 
-	void BeginPlay() override; //checks in hieracy for beginplay
+private:
+	void AimTowardsCrossHair(); // start tank moving barrel 
 };
