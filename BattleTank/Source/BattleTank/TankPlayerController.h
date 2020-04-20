@@ -21,5 +21,9 @@ public:
 	virtual void BeginPlay() override; //checks in hieracy for beginplay
 
 private:
-	void AimTowardsCrossHair(); // start tank moving barrel 
+	void AimTowardsCrossHair(); // start tank moving barrel
+
+	//return OUT parameter, true if hit landscape
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const; // out parameters make a reference to use / look for &
+
 };

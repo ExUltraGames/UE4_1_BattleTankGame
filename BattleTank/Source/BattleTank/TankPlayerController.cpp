@@ -35,11 +35,23 @@ ATank* ATankPlayerController::GetControlledTank() const
     return Cast<ATank>(GetPawn()); //returns pawn player controller possessing // cast forces a data type to be converted  
 }
 
+
+//testing Aiming component, set to 1.0 and true (we hit something and at location 1,1,1)
 void ATankPlayerController::AimTowardsCrossHair()
 {
     if(!GetControlledTank())    { return; }
-    //GetWorld Location
-    //linetrace trought crosshair
-    //hit landscape?
+    // using out parameter for this // don't in unreal use define OUT
+    FVector HitLocation; // out parameter// don't initialise
+    if(GetSightRayHitLocation(HitLocation))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString()); // outing variable to console
+    }
+    
     //tellcontroller tank to aim at his point
+}
+//GetWorld Location of linetrace through crosshair, true if hits landscape
+bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
+{
+    HitLocation = FVector(1.0);
+    return true;
 }
