@@ -45,7 +45,7 @@ void ATankPlayerController::AimTowardsCrossHair()
     FVector HitLocation; // out parameter// don't initialise
     if(GetSightRayHitLocation(HitLocation))
     {
-        UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString()); // outing variable to console
+        //UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString()); // outing variable to console
     }
     
     //tellcontroller tank to aim at his point
@@ -58,10 +58,30 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
     //find crosshair posititon in pixel co-ords
     int32 ViewportSizeX, ViewportSizeY;
     GetViewportSize(ViewportSizeX, ViewportSizeY);
-    auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+    auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation); // could use FVector to be specific rather than auto
     //UE_LOG(LogTemp, Warning, TEXT("Screenlocation: %s"), *ScreenLocation.ToString());
 
-    //De-project screen position to a a world direction
+    //De-project screen position to a a world direction // refactored into GetLookDirection() below
+    // FVector CameraWorldLocation;
+    // FVector WorldDirection; // renamed to LookDirection in refactor
+    // //bool DeprojectScreenPositionToWorld(float ScreenX,float ScreenY,FVector & WorldLocation,FVector & WorldDirection) const // from docs use below
+    // if(DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, WorldDirection)) // if true as a bool
+    // {
+    //     UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *WorldDirection.ToString());
+    // }
+
+    FVector LookDirection;
+    if(GetLookDirection(ScreenLocation, LookDirection))
+    {
+         UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *LookDirection.ToString());   
+    }
+
     //line trace along look direction, see hwat hit up to max range
     return true;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const // in parameter = screenlocation, functions OUTs Lookdirection
+{
+    FVector CameraWorldLocation; // to be discarded
+    return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection); // must return as a bool function
 }
