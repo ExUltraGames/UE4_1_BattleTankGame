@@ -3,6 +3,7 @@
 #include "TankPlayerController.h"
 #include "BattleTank.h"
 
+//setup beginplay // use super
 void ATankPlayerController::BeginPlay()// so we can log out
 {
     Super::BeginPlay();
@@ -20,8 +21,7 @@ void ATankPlayerController::BeginPlay()// so we can log out
     }
 }
 
-//tick
-//super
+//tick // runs every frame setup use super
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -30,6 +30,7 @@ void ATankPlayerController::Tick(float DeltaTime)
      
 }
 
+//method returns a pointer of tank possesed
 ATank* ATankPlayerController::GetControlledTank() const
 {
     return Cast<ATank>(GetPawn()); //returns pawn player controller possessing // cast forces a data type to be converted  
@@ -52,6 +53,15 @@ void ATankPlayerController::AimTowardsCrossHair()
 //GetWorld Location of linetrace through crosshair, true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-    HitLocation = FVector(1.0);
+    //OutHitLocation = FVector(1.0);//test demoing 1,1,1 vector that this function works
+    
+    //find crosshair posititon in pixel co-ords
+    int32 ViewportSizeX, ViewportSizeY;
+    GetViewportSize(ViewportSizeX, ViewportSizeY);
+    auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+    //UE_LOG(LogTemp, Warning, TEXT("Screenlocation: %s"), *ScreenLocation.ToString());
+
+    //De-project screen position to a a world direction
+    //line trace along look direction, see hwat hit up to max range
     return true;
 }
