@@ -45,7 +45,7 @@ void ATankPlayerController::AimTowardsCrossHair()
     FVector HitLocation; // out parameter// don't initialise
     if(GetSightRayHitLocation(HitLocation))
     {
-        //UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString()); // outing variable to console
+        UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString()); // outing variable to console
     }
     
     //tellcontroller tank to aim at his point
@@ -73,11 +73,40 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
     FVector LookDirection;
     if(GetLookDirection(ScreenLocation, LookDirection))
     {
-         UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *LookDirection.ToString());   
+        //line trace along look direction, see hwat hit up to max range
+        GetLookVectorHitLocation(LookDirection, HitLocation); // functions sets the hitlocation to OUT from GetSightRayHitLocation
+        //UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *LookDirection.ToString());   
     }
 
-    //line trace along look direction, see hwat hit up to max range
+    
     return true;
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const //bool as need a success result
+{
+    FHitResult HitResult;  // stre the hit result as an FHitResult
+    auto StartLocation = PlayerCameraManager->GetCameraLocation();
+    auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+    // if(//Linetrace success) // psuedo code of below
+    // {
+    //     //set hit location
+    //     return true;
+    // }
+    // return false;
+
+    if(GetWorld()->LineTraceSingleByChannel(
+         HitResult, //this is what is OUT
+         StartLocation, 
+         EndLocation, 
+         ECollisionChannel::ECC_Visibility)   // ECollisionChannel TraceChannel = pick the visible channel
+          )
+    {
+        //set hit location
+        HitLocation = HitResult.Location; //this gives a vector from hitresult (struct)
+        return true;
+    }
+    HitLocation = FVector(0); // if don't hit any thing (sky) get 0,0,0 and a false
+    return false;
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const // in parameter = screenlocation, functions OUTs Lookdirection
@@ -85,3 +114,5 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
     FVector CameraWorldLocation; // to be discarded
     return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection); // must return as a bool function
 }
+
+
