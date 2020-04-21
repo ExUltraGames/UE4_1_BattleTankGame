@@ -14,10 +14,13 @@ class BATTLETANK_API ATank : public APawn
 
 public: //as this is external worldview of tank
 	void AimAt(FVector HitLocation);//included in TankPlayerController so can use there & in TankAIController
+	
+	UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
 protected: // need to access using UPROPERTY // but doens't need to be outside Tank
 	 UTankAimingComponent* TankAimingComponent = nullptr;// creating pointer to aiming component , need the component to be made in c++ tankaimingcomponent
-	
+
 private://
 	// Sets default values for this pawn's properties
 	ATank();
