@@ -41,3 +41,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT13_UE4 Finding Pixel coords
 * BT14_UE4 DeprojectScreenToWorld
 * BT15_UE5 LineTraceSingleByChannel()
+* BT16_UE4 Unify Player & AI Aiming

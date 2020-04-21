@@ -45,10 +45,12 @@ void ATankPlayerController::AimTowardsCrossHair()
     FVector HitLocation; // out parameter// don't initialise
     if(GetSightRayHitLocation(HitLocation))
     {
-        UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString()); // outing variable to console
+        //UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString()); // outing the final variable to console // all others must work for this to happen
+        //tellcontroller tank to aim at his point
+        GetControlledTank()->AimAt(HitLocation);
     }
     
-    //tellcontroller tank to aim at his point
+   
 }
 //GetWorld Location of linetrace through crosshair, true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
@@ -85,7 +87,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const //bool as need a success result
 {
     FHitResult HitResult;  // stre the hit result as an FHitResult
-    auto StartLocation = PlayerCameraManager->GetCameraLocation();
+    auto StartLocation = PlayerCameraManager->GetCameraLocation(); // playercameramanager is a variable of APlayerController
     auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
     // if(//Linetrace success) // psuedo code of below
     // {
@@ -105,7 +107,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
         HitLocation = HitResult.Location; //this gives a vector from hitresult (struct)
         return true;
     }
-    HitLocation = FVector(0); // if don't hit any thing (sky) get 0,0,0 and a false
+    HitLocation = FVector(0); // if don't hit anything (i.e.sky) get 0,0,0 and return a false
     return false;
 }
 

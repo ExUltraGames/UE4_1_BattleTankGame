@@ -11,15 +11,17 @@ class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
 
-public:
+public: //as this is external worldview of tank
+	void AimAt(FVector HitLocation);//included in TankPlayerController so can use there & in TankAIController
+
+
+private://
 	// Sets default values for this pawn's properties
 	ATank();
 
-protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

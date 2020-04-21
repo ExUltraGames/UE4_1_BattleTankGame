@@ -20,8 +20,8 @@ public:
 
 private:
 	ATank* GetControlledTank() const; // pointer to a Tank
-	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override; //checks in hieracy for beginplay
+	virtual void Tick(float DeltaTime) override;
 	void AimTowardsCrossHair(); // start tank moving barrel
 
 	//return OUT parameter, true if hit landscape

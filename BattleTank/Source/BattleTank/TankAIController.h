@@ -16,9 +16,11 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 	
 public:
+
+private:
 	virtual void BeginPlay() override; //checks in hieracy for beginplay
+	virtual void Tick(float DeltaTime) override;
 	ATank* GetControlledTank() const; // pointer to an AITank
 	ATank* GetPlayerTank() const; // returns pointer to player tank
-
 	
 };

@@ -28,6 +28,22 @@ void ATankAIController::BeginPlay()// so we can log out
     }
 }
 
+//tick // runs every frame setup use super
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+    //UE_LOG(LogTemp, Warning, TEXT("PlayerController TICK Intercepted"));
+    if(GetPlayerTank()) // no point running if no player tank
+    {
+        //MOve towards the player
+
+        //Aim towards player
+        GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+        
+        //Fire if ready
+    }
+}
+
 ATank* ATankAIController::GetControlledTank() const /// returns possed tank
 {
     return Cast<ATank>(GetPawn()); //returns pawn player controller possessing // cast forces a data type to be converted  
