@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Kismet/GameplayStatics.h"
 #include "TankAimingComponent.h"
 
 // Sets default values for this component's properties
@@ -37,9 +37,39 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation)
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *GetOwner()->GetName(), *HitLocation.ToString(), *Barrel->GetComponentLocation().ToString() );
+
+	if(!Barrel) {return;} // protect Barrel pointer
+
+	//FVector OutLaunchVelocity; // OUT from the function
+	FVector OutLaunchVelocity(0);// initialise to zero to output 0,0,0
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")); // more accurate than just component
+
+	//Calculate OUTLaunchVelocity
+
+	if	(UGameplayStatics::SuggestProjectileVelocity
+			(
+				this, //ref to this tankaiming component
+				OutLaunchVelocity,
+				StartLocation,
+				HitLocation,
+				LaunchSpeed,
+				false,
+				0, // want to be accurate
+				0, // don't want to
+				ESuggestProjVelocityTraceOption::DoNotTrace //debug trace // caution don't put ,
+			)
+		)
+	{
+		auto AimDirection = OutLaunchVelocity.GetSafeNormal(); //outputs the unit vector from FVector
+		UE_LOG(LogTemp, Warning, TEXT("Tank %s aiming at: %s"), *GetOwner()->GetName(), *AimDirection.ToString()); 
+		// return true; // don't need as not setting a false statement after
+	}
+	//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *GetOwner()->GetName(), *HitLocation.ToString(), *Barrel->GetComponentLocation().ToString() );
+	//UE_LOG(LogTemp, Warning, TEXT("Firing at: %f"), LaunchSpeed); //prove launch speed is making it all the way to the component
+	
 }
+
 
 

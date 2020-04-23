@@ -44,3 +44,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT16_UE4 Unify Player & AI Aiming
 * BT17_UE4 Creating Default Sub Objects
 * BT18_UE4 BluePrintCallable()
+* BT19_UE4 SuggestProjectileVelocity() (UGameStatics)
