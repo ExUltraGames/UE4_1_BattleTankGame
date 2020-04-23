@@ -45,3 +45,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT17_UE4 Creating Default Sub Objects
 * BT18_UE4 BluePrintCallable()
 * BT19_UE4 SuggestProjectileVelocity() (UGameStatics)
+* BT20_UE4 FRotators, Barrel movement beginning
