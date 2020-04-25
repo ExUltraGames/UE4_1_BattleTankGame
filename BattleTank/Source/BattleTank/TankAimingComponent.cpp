@@ -67,7 +67,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - BarrelRotator; // difference
 	
 	// create TankBarrel class for this: //move barrel correct amount this frame //Set max elevation speed // given max speed and frame time (framerate independant)
-	Barrel->Elevate(5); // To Do remove magic number
+	Barrel->Elevate(1); // To Do remove magic number 
 }
 
 

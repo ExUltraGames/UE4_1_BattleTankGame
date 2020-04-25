@@ -8,7 +8,7 @@
 /**
  * 
  */
-UCLASS( meta=(BlueprintSpawnableComponent), hideCategories = ("Colision")) 
+UCLASS( meta=(BlueprintSpawnableComponent), HideCategories = ("Collision") ) // needed to compile whole TankBattle
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
@@ -19,7 +19,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxDegreesPerSecond = 20; // sensible default  
+	float MaxDegreesPerSecond = 5; // sensible default  
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	float MaxElevationDegrees = 40; // sensible default  // find in BP and set in cpp

@@ -50,3 +50,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT22_UE4 222: BlueprintSpawnableComponent()
 * BT23_UE4 223: Execution Flow (Diagram for Tank)
 * BT24_UE4 224:Forward Declarations & Debug
+* BT25_UE4 226:Clamp()
