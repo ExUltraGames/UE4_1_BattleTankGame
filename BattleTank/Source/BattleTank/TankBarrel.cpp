@@ -3,7 +3,7 @@
 
 #include "TankBarrel.h"
 
-void  UTankBarrel::Elevate(float DegreesPerSecond);
+void  UTankBarrel::Elevate(float DegreesPerSecond)
 {
 	//move barrel correct amount this frame //Set max elevation speed > create barrel class (SM)
 

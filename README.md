@@ -47,3 +47,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT19_UE4 SuggestProjectileVelocity() (UGameStatics)
 * BT20_UE4 FRotators, Barrel movement beginning
 * BT21_UE4 221: Forward Declarations
+* BT22_UE4 222: BlueprintSpawnableComponent()
