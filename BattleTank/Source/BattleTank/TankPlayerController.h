@@ -2,15 +2,14 @@
 
 #pragma once
 
-#include "Tank.h" // for ATank
+//#include "Tank.h" // for ATank // forward declare
 #include "CoreMinimal.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h" //must be last include
 
-/**
- * 
- */
+class ATank;
+
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController // atankplayercontroller is based on APLayerController
 {

@@ -31,13 +31,16 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	FVector OutLaunchVelocity(0);// initialise to zero to output 0,0,0
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")); // more accurate than just component
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
-			(
+			( // DEBUG - NEED ALL PARAMETERS EVEN THE DEFAULT ONES // ADD FALSE, 0,0 BACK IN & ESuggestProjVelocityTraceOption::DoNotTrace
 				this, //ref to this tankaiming component
 				OutLaunchVelocity,
 				StartLocation,
 				HitLocation,
 				LaunchSpeed,
-				ESuggestProjVelocityTraceOption::DoNotTrace //debug trace // caution don't put ,
+				false, //debug
+				0,//debug
+				0,//debug
+				ESuggestProjVelocityTraceOption::DoNotTrace //debug trace // caution don't put , at end
 			);
 	if	(bHaveAimSolution)
 	{
