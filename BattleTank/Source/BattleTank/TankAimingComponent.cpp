@@ -45,8 +45,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		//UE_LOG(LogTemp, Warning, TEXT("Tank %s aiming at: %s"), *GetOwner()->GetName(), *AimDirection.ToString()); 
 		// return true; // don't need as not setting a false statement after
 		MoveBarrelTowards(AimDirection);
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim Found"),GetWorld()->GetTimeSeconds());
 	}
-	//if nothing found do nothing
+	else 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%f: NO Aim Found"),GetWorld()->GetTimeSeconds());
+	}
+	
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
