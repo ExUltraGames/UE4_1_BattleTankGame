@@ -9,6 +9,7 @@
 
 //forward declarations
 class UTankBarrel; // forward declaration
+class UTankTurret;
 class UTankAimingComponent;
 
 UCLASS()
@@ -21,6 +22,9 @@ public: //as this is external worldview of tank
 	
 	UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 protected: // need to access using UPROPERTY // but doens't need to be outside Tank
 	 UTankAimingComponent* TankAimingComponent = nullptr;// creating pointer to aiming component , need the component to be made in c++ tankaimingcomponent
