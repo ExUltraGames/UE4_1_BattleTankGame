@@ -52,3 +52,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT24_UE4 224:Forward Declarations & Debug
 * BT25_UE4 226:Clamp()
 * BT25_UE4 227: TankTurret Movement
+* BT25_UE4 Tank ReBuild
