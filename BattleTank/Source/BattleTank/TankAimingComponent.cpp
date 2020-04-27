@@ -69,7 +69,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//work out difference between current rotation and aim direction
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();  // gives roll pitch and yaw of barrel //GetForwardVector  =  direction of barrel // Rotation() turn into a struct FRotator, roll pitch Yaw
 	auto AimAsRotator = AimDirection.Rotation();
-	UE_LOG(LogTemp, Warning, TEXT("AimasRotator: %s"), *AimAsRotator.ToString()); // see what it kicks out
+	//UE_LOG(LogTemp, Warning, TEXT("AimasRotator: %s"), *AimAsRotator.ToString()); // see what it kicks out
 	auto DeltaRotator = AimAsRotator - BarrelRotator; // difference
 	
 	// create TankBarrel class for this: //move barrel correct amount this frame //Set max elevation speed // given max speed and frame time (framerate independant)

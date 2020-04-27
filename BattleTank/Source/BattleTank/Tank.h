@@ -18,13 +18,17 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public: //as this is external worldview of tank
-	void AimAt(FVector HitLocation);//included in TankPlayerController so can use there & in TankAIController
 	
 	UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
 	void SetTurretReference(UTankTurret* TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Firing) // a method we can call from blueprint 
+	void Fire(); // need to implement
+
+	void AimAt(FVector HitLocation);//included in TankPlayerController so can use there & in TankAIController
 
 protected: // need to access using UPROPERTY // but doens't need to be outside Tank
 	 UTankAimingComponent* TankAimingComponent = nullptr;// creating pointer to aiming component , need the component to be made in c++ tankaimingcomponent
