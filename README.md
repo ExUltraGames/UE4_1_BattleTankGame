@@ -54,3 +54,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT26_UE4 227: TankTurret Movement
 * BT27_UE4 Tank ReBuild
 * BT28_UE4 Setting Projectile (create cpp & bp class)
+* BT29_UE4 Bug Investigation & collisions
