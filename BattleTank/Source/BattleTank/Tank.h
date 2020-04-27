@@ -11,6 +11,7 @@
 class UTankBarrel; // forward declaration
 class UTankTurret;
 class UTankAimingComponent;
+class AProjectile; // needed for TSubclassOf// make it available
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -25,7 +26,7 @@ public: //as this is external worldview of tank
 	UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
 	void SetTurretReference(UTankTurret* TurretToSet);
 
-	UFUNCTION(BlueprintCallable, Category = Firing) // a method we can call from blueprint 
+	UFUNCTION(BlueprintCallable, Category = Firing) // a method we can call from blueprint with Launchspeed see below
 	void Fire(); // need to implement
 
 	void AimAt(FVector HitLocation);//included in TankPlayerController so can use there & in TankAIController
@@ -46,4 +47,10 @@ private://
 	UPROPERTY(Editanywhere, Category = Firing)
 	float LaunchSpeed = 100000; //= 1000m/s = todo find a sensible default value for tweaking in BP
 
+	UPROPERTY(Editanywhere, Category = Setup) // set of every instance of Tank
+	//UClass* ProjectileBlueprint; // or can TSubclassOf<UProjectileBlueprint> ProjectileBlueprint; // this enforces a choice?
+	TSubclassOf<AProjectile> ProjectileBlueprint; // Projectile blueprint based on projectile.h class whihc is an Actor
+
+	//Local barrel referecne for spawning projectile
+	UTankBarrel* Barrel = nullptr; // set in cpp
 };
