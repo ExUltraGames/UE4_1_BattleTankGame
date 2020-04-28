@@ -56,3 +56,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT28_UE4 Setting Projectile (create cpp & bp class)
 * BT29_UE4 Bug Investigation & collisions
 * BT30_UE4 Projectile_2
+* BT31_UE4 233: Projectile Movement Components

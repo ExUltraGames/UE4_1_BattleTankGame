@@ -45,7 +45,7 @@ private://
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(Editanywhere, Category = Firing)
-	float LaunchSpeed = 100000; //= 1000m/s = todo find a sensible default value for tweaking in BP
+	float LaunchSpeed = 40000; //= 1000m/s = todo find a sensible default value for tweaking in BP
 
 	UPROPERTY(Editanywhere, Category = Setup) // set of every instance of Tank
 	//UClass* ProjectileBlueprint; // or can TSubclassOf<UProjectileBlueprint> ProjectileBlueprint; // this enforces a choice?

@@ -49,12 +49,16 @@ void ATank::Fire()
 	//UE_LOG(LogTemp, Warning, TEXT("%f: Tank Fires"), GetWorld()->GetTimeSeconds());
 
 	if(!Barrel) {return;}
+	
 	//spawn projectile
-	GetWorld()->SpawnActor<AProjectile>(
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBlueprint, // class to spawn
 		Barrel->GetSocketLocation(FName("Projectile")), // location to spawn
 		Barrel->GetSocketRotation(FName("Projectile")) // rotation to spawn
 	); // use signauture number 2 for this?
-
+	
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
+
+
 
