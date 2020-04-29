@@ -31,9 +31,6 @@ public: //as this is external worldview of tank
 
 	void AimAt(FVector HitLocation);//included in TankPlayerController so can use there & in TankAIController
 
-	UPROPERTY(Editanywhere, Category = Setup) // set of every instance of Tank
-	//UClass* ProjectileBlueprint; // or can TSubclassOf<UProjectileBlueprint> ProjectileBlueprint; // this enforces a choice?
-	TSubclassOf<AProjectile> ProjectileBlueprint; // Projectile blueprint based on projectile.h class whihc is an Actor
 
 protected: // need to access using UPROPERTY // but doens't need to be outside Tank
 	 UTankAimingComponent* TankAimingComponent = nullptr;// creating pointer to aiming component , need the component to be made in c++ tankaimingcomponent
@@ -47,13 +44,19 @@ private://
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	UPROPERTY(EditDefaultsOnly, Category = Setup) // set of every instance of Tank
+	//UClass* ProjectileBlueprint; // or can TSubclassOf<UProjectileBlueprint> ProjectileBlueprint; // this enforces a choice?
+	TSubclassOf<AProjectile> ProjectileBlueprint; // Projectile blueprint based on projectile.h class whihc is an Actor
 
-	UPROPERTY(Editanywhere, Category = Firing)
-	float LaunchSpeed = 40000; //= 1000m/s = todo find a sensible default value for tweaking in BP
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 10000; //= 1000m/s = todo find a sensible default value for tweaking in BP
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3;
 
 	//Local barrel referecne for spawning projectile
 	UTankBarrel* Barrel = nullptr; // set in cpp
 
-	float ReloadTimeInSeconds = 3;
 	double LastFiretime = 0; //Initilaise at 0
 };

@@ -25,12 +25,14 @@ private:
 
 	//return OUT parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const; // out parameters make a reference to use / look for &
-	UPROPERTY(EditAnywhere) // set these to editanywhere // if move pixel in BP, would need to change these values
+	
+	UPROPERTY(EditDefaultsOnly) // set these to editanywhere // if move pixel in BP, would need to change these values
 	float CrossHairXLocation = 0.5f;
-	UPROPERTY(EditAnywhere)
+	
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairYLocation = 0.3333;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const; // refactor
