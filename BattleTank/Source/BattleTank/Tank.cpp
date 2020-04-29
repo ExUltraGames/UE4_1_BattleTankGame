@@ -48,16 +48,23 @@ void ATank::Fire()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("%f: Tank Fires"), GetWorld()->GetTimeSeconds());
 
-	if(!Barrel) {return;}
+	bool isReloaded = (FPlatformTime::Seconds() - LastFiretime) > ReloadTimeInSeconds;
+	//if(!Barrel) {return;} cahnge and move method into
+	if(Barrel && isReloaded)
+	{
+		//spawn projectile
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint, // class to spawn
+			Barrel->GetSocketLocation(FName("Projectile")), // location to spawn
+			Barrel->GetSocketRotation(FName("Projectile")) // rotation to spawn
+		); // use signauture number 2 for this?
+		
+		if(!Projectile) {return;} // I am  leaving in for protection but not needed
+		
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFiretime = FPlatformTime::Seconds();
+	}
 	
-	//spawn projectile
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-		ProjectileBlueprint, // class to spawn
-		Barrel->GetSocketLocation(FName("Projectile")), // location to spawn
-		Barrel->GetSocketRotation(FName("Projectile")) // rotation to spawn
-	); // use signauture number 2 for this?
-	
-	Projectile->LaunchProjectile(LaunchSpeed);
 }
 
 
