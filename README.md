@@ -61,3 +61,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT33_UE4 235: EditAnywhere vs EditDefaults only
 * BT34_UE4 236: Adding a Quit button (UI) & Collisions
 * BT35_UE4 237: Track Throttle (UStaticMeshComponent, BluePrintSpawnable)
+* BT36_UE4 238: AppplyForceAtLocation() - applying forces to tank
+* BT37_UE4 239: Physics Material & Friction
