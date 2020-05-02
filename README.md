@@ -59,4 +59,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT31_UE4 233: Projectile Movement Components
 * BT32_UE4 234: Making AI Tanks Fire
 * BT33_UE4 235: EditAnywhere vs EditDefaults only
-* BT34_UE4 237: Adding a Quit button (UI) & Collisions
+* BT34_UE4 236: Adding a Quit button (UI) & Collisions
+* BT35_UE4 237: Track Throttle (UStaticMeshComponent, BluePrintSpawnable)
