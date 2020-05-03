@@ -63,3 +63,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT35_UE4 237: Track Throttle (UStaticMeshComponent, BluePrintSpawnable)
 * BT36_UE4 238: AppplyForceAtLocation() - applying forces to tank
 * BT37_UE4 239: Physics Material & Friction
+* BT38_UE4 240: Start Fly by Wire setup (intentions into commands, and for the AI)
