@@ -71,3 +71,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT43_UE4 246: DotProduct() Vector Operator ( Tank AI Movement forward back, COS)
 * BT44_UE4 247: CrossProduct() Vector Operator (tank AI rotate, SINE)
 * BT45_UE4 248: Finalising Class Code (Finish Tank Movement)
+* BT46_UE4 249: Use BluePrint Variables (UI Widget colour aiming)

@@ -15,7 +15,9 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 
 public: 
+	void CombineThrottle(float Throttle);
 	// Sets a Throttle -1 to +1 (note shows in BP)
+	
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetThrottle(float Throttle);
 

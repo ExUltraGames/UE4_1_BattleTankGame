@@ -34,6 +34,7 @@ public: //as this is external worldview of tank
 
 
 protected: // need to access using UPROPERTY // but doens't need to be outside Tank
+	UPROPERTY(BlueprintReadOnly) // for UI Widget
 	UTankAimingComponent* TankAimingComponent = nullptr;// creating pointer to aiming component , need the component to be made in c++ tankaimingcomponent
 	
 	UPROPERTY(BlueprintReadOnly)// makes c++ property readable in BP so we can assign

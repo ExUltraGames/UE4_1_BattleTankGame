@@ -17,8 +17,11 @@ class BATTLETANK_API ATankPlayerController : public APlayerController // atankpl
 	
 public:
 
-private:
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
 	ATank* GetControlledTank() const; // pointer to a Tank
+
+private:
 	virtual void BeginPlay() override; //checks in hieracy for beginplay
 	virtual void Tick(float DeltaTime) override;
 	void AimTowardsCrossHair(); // start tank moving barrel

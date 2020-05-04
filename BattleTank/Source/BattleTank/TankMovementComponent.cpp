@@ -42,7 +42,7 @@ void UTankMovementComponent::IntendTurnRight(float Throw) // called this to say 
     LeftTrack->SetThrottle(Throw);
     RightTrack->SetThrottle(-Throw);
 }
- // could do this but have assigned a -1 to A key in binding to turn left instead // naming of above is to show what a +value does
+// could do this but have simply assigned a -1 to A key in binding to turn left instead // naming of above is to show what a +value does
 // void UTankMovementComponent::IntendTurnLeft(float Throw)
 // {
 //     LeftTrack->SetThrottle(-Throw);
