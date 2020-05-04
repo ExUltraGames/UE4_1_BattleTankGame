@@ -9,7 +9,6 @@ void UTankTrack::SetThrottle(float Throttle)
     // auto Name = GetName();
 	// UE_LOG(LogTemp, Warning, TEXT("%s throttle: %f"), *Name,  Throttle);
 
-    //TODO clamp throttle vale so player can't alter
     auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
     auto ForceLocation = GetComponentLocation(); // location of track
     //auto TankRoot = GetOwner()->GetRootComponent(); // this GetRootComponent (a USceneComponent) doesn't allow force so cast it to one that does // see hieracy

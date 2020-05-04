@@ -22,9 +22,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendMoveForward(float Throw); // take in float will receive -1 to +1 // throw of joystick
-	
+	UFUNCTION(BlueprintCallable, Category = Input)
+	void IntendTurnRight(float Throw);
+	// UFUNCTION(BlueprintCallable, Category = Input)
+	// void IntendTurnLeft(float Throw);
 
 private:
 	UTankTrack* LeftTrack = nullptr; //protects and gives a known address for pointers // don't forget *
-	UTankTrack* RightTrack = nullptr;
+	UTankTrack* RightTrack = nullptr; // needed as used in several references across class
 };

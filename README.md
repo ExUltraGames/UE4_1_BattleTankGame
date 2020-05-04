@@ -66,3 +66,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT38_UE4 240: Start Fly by Wire setup (intentions into commands, and for the AI)
 * BT39_UE4 241: Using BlueprintReadOnly (Add default movementcomponent and use in BP)   
 * BT40_UE4 242: Better Component Architecture (Adding c++ components to BP and calling)
+* BT41_UE4 243: Completing Manual Tank Movement
