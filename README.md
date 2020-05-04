@@ -69,4 +69,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT41_UE4 243: Completing Manual Tank Movement
 * BT42_UE4 245: Dissecting RequestDirectMove() & MoveToActor()
 * BT43_UE4 246: DotProduct() Vector Operator ( Tank AI Movement forward back, COS)
-* BT44_UE4 248: CrossProduct() Vector Operator (tank AI rotate, SINE)
+* BT44_UE4 247: CrossProduct() Vector Operator (tank AI rotate, SINE)
+* BT45_UE4 248: Finalising Class Code (Finish Tank Movement)
