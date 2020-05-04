@@ -3,6 +3,7 @@
 #include "Engine/World.h"
 #include "TankAimingComponent.h"// needed for tankaimingcomponent
 #include "TankBarrel.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 #include "Tank.h"
 
@@ -13,6 +14,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false; // removed tick as not needed = optimisation
 	//adding in constructor // no need to protect pointers added at construction // this will put in Tank.bp // so we can SET Barrel & Turret
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)//change UStaticMeshComponent

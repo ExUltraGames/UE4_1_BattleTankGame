@@ -11,14 +11,14 @@ void ATankPlayerController::BeginPlay()// so we can log out
 
     //log if possesing Tank // check if GetControlledTank is working // similar to BP
     //auto ControlledTank = GetControlledTank() and replace ControlledTank in below // auto = keyword declares a variable in the automatic storage class
-    if(!GetControlledTank())
-    {
-        UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing a Tank"));
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *GetControlledTank()->GetName());
-    }
+    // if(!GetControlledTank()) // no longer needed
+    // {
+    //     UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing a Tank"));
+    // }
+    // else
+    // {
+    //     UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *GetControlledTank()->GetName());
+    // }
 }
 
 //tick // runs every frame setup use super

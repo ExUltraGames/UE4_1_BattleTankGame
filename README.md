@@ -64,3 +64,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT36_UE4 238: AppplyForceAtLocation() - applying forces to tank
 * BT37_UE4 239: Physics Material & Friction
 * BT38_UE4 240: Start Fly by Wire setup (intentions into commands, and for the AI)
+* BT39_UE4 241: Using BlueprintReadOnly (Add movementcomponent and use in BP)   
