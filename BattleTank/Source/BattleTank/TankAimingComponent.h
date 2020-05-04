@@ -28,9 +28,10 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 public:	
 	// Sets default values for this component's properties
-	UTankAimingComponent();
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	void SetTurretReference(UTankTurret* TurretToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+	// void SetBarrelReference(UTankBarrel* BarrelToSet); // removed in refactor
+	// void SetTurretReference(UTankTurret* TurretToSet);
 	
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
@@ -39,6 +40,7 @@ protected: // access from subclass the TankAimingComponent
 	EFiringState FiringState = EFiringState::Reloading; // Declare and initialise
 
 private:
+	UTankAimingComponent(); // moved in refactor
 	//UStaticMeshComponent* Barrel = nullptr; // needs changing as now a Tank Barrel SM Component
 	UTankBarrel* Barrel = nullptr; // needs forward declaration // don't include TankBarrel.h in anothe .h file only .cpp = compile error
 	void MoveBarrelTowards(FVector AimDirection); // nothing outside tankaiming component needs to move barrel = private

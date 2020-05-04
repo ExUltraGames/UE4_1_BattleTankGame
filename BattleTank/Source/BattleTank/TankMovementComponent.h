@@ -30,7 +30,7 @@ public:
 
 
 private:
-	//Called from pathfinding logic by AI controllers
+	//Called from pathfinding logic by AI controllers 
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override; // override here // taken from "GameFramework/NavMovementComponent.h" 
 	UTankTrack* LeftTrack = nullptr; //protects and gives a known address for pointers // don't forget *
 	UTankTrack* RightTrack = nullptr; // needed as used in several references across class

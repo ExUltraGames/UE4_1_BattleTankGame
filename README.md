@@ -73,3 +73,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT45_UE4 248: Finalising Class Code (Finish Tank Movement)
 * BT46_UE4 249: Use BluePrint Variables (UI Widget colour aiming)
 * BT47_UE4 250: Using Enum(erations)
+* BT47_UE4 250: Refactor AimComponent, compiles but HARD CRASH

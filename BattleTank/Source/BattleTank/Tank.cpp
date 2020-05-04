@@ -13,32 +13,34 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false; // removed tick as not needed = optimisation
 	//adding in constructor // no need to protect pointers added at construction // this will put in Tank.bp // so we can SET Barrel & Turret
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component")); // removed in refactor
 	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component")); Removed and made spanwable instead
 }
 
-void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)//change UStaticMeshComponent
-{
-	TankAimingComponent->SetBarrelReference(BarrelToSet);
-	Barrel = BarrelToSet; // keeping a local reference
-}
+// removed this to aimingcompoent and called in BP
 
-void ATank::SetTurretReference(UTankTurret* TurretToSet)//change UStaticMeshComponent
-{
-	TankAimingComponent->SetTurretReference(TurretToSet);
-}
+// void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)//change UStaticMeshComponent
+// {
+// 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+// 	Barrel = BarrelToSet; // keeping a local reference
+// }
 
-// Called when the game starts or when spawned
-void ATank::BeginPlay()
-{
-	Super::BeginPlay();
-}
+// void ATank::SetTurretReference(UTankTurret* TurretToSet)//change UStaticMeshComponent
+// {
+// 	TankAimingComponent->SetTurretReference(TurretToSet);
+// }
 
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
+// Called when the game starts or when spawned // not used remove
+// void ATank::BeginPlay()
+// {
+// 	Super::BeginPlay();
+// }
+
+// Called to bind functionality to input // not used
+// void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+// {
+// 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+// }
 
 void ATank::AimAt(FVector HitLocation)
 {

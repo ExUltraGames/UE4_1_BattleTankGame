@@ -14,17 +14,23 @@ UTankAimingComponent::UTankAimingComponent()
 
 }
 
-void  UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) // we've set the barrel
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	if(!BarrelToSet) {return;}// protect Barrel pointer
-	Barrel = BarrelToSet;
-
-}
-void  UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
-{
-	if(!TurretToSet) {return;}
 	Turret = TurretToSet;
+	Barrel = BarrelToSet;
 }
+
+// void  UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) // we've set the barrel
+// {
+// 	if(!BarrelToSet) {return;}// protect Barrel pointer
+// 	Barrel = BarrelToSet;
+
+// }
+// void  UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+// {
+// 	if(!TurretToSet) {return;}
+// 	Turret = TurretToSet;
+// }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
@@ -56,15 +62,16 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		MoveBarrelTowards(AimDirection);
 		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim Found"),GetWorld()->GetTimeSeconds());
 	}
-	else 
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%f: NO Aim Found"),GetWorld()->GetTimeSeconds());
-	}
+	// else 
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("%f: NO Aim Found"),GetWorld()->GetTimeSeconds());
+	// }
 	
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
+	if(!Turret || !Barrel) {return;}
 	//MOve barrel towards an aimdirection by:
 	//work out difference between current rotation and aim direction
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();  // gives roll pitch and yaw of barrel //GetForwardVector  =  direction of barrel // Rotation() turn into a struct FRotator, roll pitch Yaw
@@ -73,6 +80,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - BarrelRotator; // difference
 	
 	// create TankBarrel class for this: //move barrel correct amount this frame //Set max elevation speed // given max speed and frame time (framerate independant)
+	
 	Barrel->Elevate(DeltaRotator.Pitch); // removed magic number
 	Turret->RotateT(DeltaRotator.Yaw);
 }

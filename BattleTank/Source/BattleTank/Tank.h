@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright theZombieroom
 
 #pragma once
 
@@ -21,11 +21,12 @@ class BATTLETANK_API ATank : public APawn
 
 public: //as this is external worldview of tank
 	
-	UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	//removed in refactoring
+	// UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
+	// void SetBarrelReference(UTankBarrel* BarrelToSet);
 
-	UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
-	void SetTurretReference(UTankTurret* TurretToSet);
+	// UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
+	// void SetTurretReference(UTankTurret* TurretToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Firing) // a method we can call from blueprint with Launchspeed see below
 	void Fire(); // need to implement
@@ -45,10 +46,10 @@ private://
 	ATank();
 
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	// virtual void BeginPlay() override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	// virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Setup) // set of every instance of Tank
 	//UClass* ProjectileBlueprint; // or can TSubclassOf<UProjectileBlueprint> ProjectileBlueprint; // this enforces a choice?
@@ -61,7 +62,7 @@ private://
 	float ReloadTimeInSeconds = 3;
 
 	//Local barrel referecne for spawning projectile
-	UTankBarrel* Barrel = nullptr; // set in cpp
+	UTankBarrel* Barrel = nullptr; //TODO remove
 
 	double LastFiretime = 0; //Initilaise at 0
 };
