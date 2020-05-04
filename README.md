@@ -68,3 +68,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT40_UE4 242: Better Component Architecture (Adding c++ components to BP and calling)
 * BT41_UE4 243: Completing Manual Tank Movement
 * BT42_UE4 245: Dissecting RequestDirectMove() & MoveToActor()
+* BT43_UE4 246: DotProduct() Vector Operator ( Tank Movement so side on)

@@ -14,9 +14,11 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
      //no need to call super as we are replacing the functioanlity we want the MoveVelocity Vector
-     auto TankName = GetOwner()->GetName();
-     auto MoveVelocityString = MoveVelocity.ToString();
-     UE_LOG(LogTemp, Warning, TEXT("%s vectoring to %s"), *TankName, *MoveVelocityString);
+     auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal(); // unit vector of tank facing forward (tanks local X axis, with length of 1)
+     auto AIForwardIntention = MoveVelocity.GetSafeNormal(); // unit vector in direction tank wants to move
+     //UE_LOG(LogTemp, Warning, TEXT("%s vectoring to %s"), *GetOwner()->GetName(), *MoveVelocity.ToString());
+     auto ForwardThrow = FVector::DotProduct(TankForward, AIForwardIntention);
+     IntendMoveForward(ForwardThrow); // send to 
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
