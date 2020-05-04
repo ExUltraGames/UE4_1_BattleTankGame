@@ -54,7 +54,7 @@ void ATankAIController::Tick(float DeltaTime)
 
         ControlledTank->AimAt(PlayerTank->GetActorLocation());
         //UE_LOG(LogTemp, Warning, TEXT("AITank %s Aiming at: %s"), *ControlledTank->GetName(), *PlayerTank->GetName() );
-        ControlledTank->Fire(); // TODO limit firing rate
+        //ControlledTank->Fire(); // TODO limit firing rate
     }
 }
 

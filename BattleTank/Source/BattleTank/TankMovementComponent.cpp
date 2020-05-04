@@ -17,8 +17,13 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
      auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal(); // unit vector of tank facing forward (tanks local X axis, with length of 1)
      auto AIForwardIntention = MoveVelocity.GetSafeNormal(); // unit vector in direction tank wants to move
      //UE_LOG(LogTemp, Warning, TEXT("%s vectoring to %s"), *GetOwner()->GetName(), *MoveVelocity.ToString());
-     auto ForwardThrow = FVector::DotProduct(TankForward, AIForwardIntention);
+     
+     auto ForwardThrow = FVector::DotProduct(TankForward, AIForwardIntention); // gives float
      IntendMoveForward(ForwardThrow); // send to 
+     auto TurnThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z; // gives vector so need the Z component
+     IntendTurnRight(TurnThrow);
+
+
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
