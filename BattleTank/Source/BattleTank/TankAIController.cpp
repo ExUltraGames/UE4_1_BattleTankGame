@@ -36,8 +36,7 @@ void ATankAIController::Tick(float DeltaTime)
     // Defactoring GetControlledTank and GetPlayerTank into below:
     // if(GetPlayerTank()) // no point running if no player tank
     // {
-    //     //MOve towards the player
-
+    //MOve towards the player
     //     //Aim towards player
     //     GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
     //     GetControlledTank()->Fire(); // fire method from Tank.h // fire every frame
@@ -51,6 +50,8 @@ void ATankAIController::Tick(float DeltaTime)
     // }
     if (PlayerTank && ControlledTank) // protects pointer
     {
+        MoveToActor(PlayerTank, AcceptanceRadius);
+
         ControlledTank->AimAt(PlayerTank->GetActorLocation());
         //UE_LOG(LogTemp, Warning, TEXT("AITank %s Aiming at: %s"), *ControlledTank->GetName(), *PlayerTank->GetName() );
         ControlledTank->Fire(); // TODO limit firing rate

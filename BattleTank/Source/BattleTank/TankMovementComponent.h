@@ -27,6 +27,9 @@ public:
 	// UFUNCTION(BlueprintCallable, Category = Input)
 	// void IntendTurnLeft(float Throw);
 
+	//TODO check best protection public or private?
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override; // override here // taken from "GameFramework/NavMovementComponent.h" 
+
 private:
 	UTankTrack* LeftTrack = nullptr; //protects and gives a known address for pointers // don't forget *
 	UTankTrack* RightTrack = nullptr; // needed as used in several references across class

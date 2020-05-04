@@ -23,4 +23,6 @@ private:
 	// ATank* GetControlledTank() const; // pointer to an AITank
 	// ATank* GetPlayerTank() const; // returns pointer to player tank
 	
+	UPROPERTY(EditDefaultsOnly)
+	float AcceptanceRadius = 3000; //assume cm for now = 30m away 
 };
