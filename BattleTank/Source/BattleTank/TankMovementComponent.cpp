@@ -21,10 +21,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
     IntendMoveForward(ForwardThrow); // send to 
      
     auto TurnThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z; // gives vector so need the Z component
-    IntendTurnRight(TurnThrow);
-    
-    //UE_LOG(LogTemp, Warning, TEXT("Right: %f, Forward: %f"), TurnThrow, ForwardThrow); //prove -1 to +1
-   
+    IntendTurnRight(TurnThrow); 
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
@@ -33,7 +30,6 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
     if(!LeftTrack || !RightTrack) {return;} // needed to protect // i.e. they exist
     LeftTrack->SetThrottle(Throw); //IWYU
     RightTrack->SetThrottle(Throw);
-    //UE_LOG(LogTemp, Warning, TEXT("Throw %f"), Throw);
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw) // called this to say what a +value does, not just called turn
@@ -42,9 +38,3 @@ void UTankMovementComponent::IntendTurnRight(float Throw) // called this to say 
     LeftTrack->SetThrottle(Throw);
     RightTrack->SetThrottle(-Throw);
 }
-// could do this but have simply assigned a -1 to A key in binding to turn left instead // naming of above is to show what a +value does
-// void UTankMovementComponent::IntendTurnLeft(float Throw)
-// {
-//     LeftTrack->SetThrottle(-Throw);
-//     RightTrack->SetThrottle(Throw);
-// }

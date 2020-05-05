@@ -25,9 +25,6 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendTurnRight(float Throw);
-	// UFUNCTION(BlueprintCallable, Category = Input)
-	// void IntendTurnLeft(float Throw);
-
 
 private:
 	//Called from pathfinding logic by AI controllers 

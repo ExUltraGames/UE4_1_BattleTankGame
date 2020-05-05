@@ -20,18 +20,13 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public: //as this is external worldview of tank
-	
-	//removed in refactoring
-	// UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
-	// void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	// UFUNCTION(BlueprintCallable, Category = Setup) // a method we can call from blueprint
-	// void SetTurretReference(UTankTurret* TurretToSet);
+	virtual void BeginPlay();
 
 	UFUNCTION(BlueprintCallable, Category = Firing) // a method we can call from blueprint with Launchspeed see below
-	void Fire(); // need to implement
+	void Fire(); 
 
 	void AimAt(FVector HitLocation);//included in TankPlayerController so can use there & in TankAIController
+
 
 
 protected: // need to access using UPROPERTY // but doens't need to be outside Tank
@@ -44,16 +39,10 @@ protected: // need to access using UPROPERTY // but doens't need to be outside T
 private://
 	// Sets default values for this pawn's properties
 	ATank();
-
-	// Called when the game starts or when spawned
-	// virtual void BeginPlay() override;
-
-	// Called to bind functionality to input
-	// virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Setup) // set of every instance of Tank
-	//UClass* ProjectileBlueprint; // or can TSubclassOf<UProjectileBlueprint> ProjectileBlueprint; // this enforces a choice?
-	TSubclassOf<AProjectile> ProjectileBlueprint; // Projectile blueprint based on projectile.h class whihc is an Actor
+	//UClass* ProjectileBlueprint; // or can TSubclassOf<UProjectileBlueprint> ProjectileBlueprint; as this enforces a choice, smaller selection
+	TSubclassOf<AProjectile> ProjectileBlueprint; // Projectile blueprint based on projectile.h class which is an Actor
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 10000; //= 1000m/s = todo find a sensible default value for tweaking in BP
