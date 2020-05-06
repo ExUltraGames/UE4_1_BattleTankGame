@@ -76,3 +76,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT48_UE4 251: Refactor AimComponent, compiles but HARD CRASH
 * BT49_UE4 252: Visual Studio Debugging (Hard Crash)+ code deletion & 253: Constructor and Begin Play Timing
 * BT50_UE4 253/4: Constructor and Begin Play Timing & Decoupling Architecture
+* BT51_UE4 255: BluePrintImplementable Event (TankPlayer and aiming)

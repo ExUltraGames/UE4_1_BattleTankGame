@@ -9,6 +9,10 @@
 #include "TankPlayerController.generated.h" //must be last include
 
 class ATank;
+class UTankAimingComponent;
+/**
+ * Responsible for helping the player aim.
+ */
 
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController // atankplayercontroller is based on APLayerController
@@ -20,6 +24,9 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	ATank* GetControlledTank() const; // pointer to a Tank
+
+	UFUNCTION(BlueprintImplementableEvent, Category = Setup)// don't need implementation with this macro // wire up in BP
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);// forward declare
 
 private:
 	virtual void BeginPlay() override; //checks in hieracy for beginplay

@@ -1,24 +1,22 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "TankPlayerController.h"
 
 //setup beginplay // use super
 void ATankPlayerController::BeginPlay()// so we can log out
 {
     Super::BeginPlay();
-    //UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin Play Intercepted"));
-
-    //log if possesing Tank // check if GetControlledTank is working // similar to BP
-    //auto ControlledTank = GetControlledTank() and replace ControlledTank in below // auto = keyword declares a variable in the automatic storage class
-    // if(!GetControlledTank()) // no longer needed
-    // {
-    //     UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing a Tank"));
-    // }
-    // else
-    // {
-    //     UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *GetControlledTank()->GetName());
-    // }
+    auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+    if(AimingComponent)
+    {
+        FoundAimingComponent(AimingComponent);// to pass for BlueprintImplementableEvent
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Player Controller, no aiming component found"));
+    }
 }
 
 //tick // runs every frame setup use super
@@ -26,8 +24,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
     AimTowardsCrossHair();
-    //UE_LOG(LogTemp, Warning, TEXT("PlayerController TICK Intercepted"));
-     
 }
 
 //method returns a pointer of tank possesed
@@ -36,21 +32,14 @@ ATank* ATankPlayerController::GetControlledTank() const
     return Cast<ATank>(GetPawn()); //returns pawn player controller possessing // cast forces a data type to be converted  
 }
 
-
-//testing Aiming component, set to 1.0 and true (we hit something and at location 1,1,1)
 void ATankPlayerController::AimTowardsCrossHair()
 {
     if(!GetControlledTank())    { return; }
-    // using out parameter for this // don't in unreal use define OUT
     FVector HitLocation; // out parameter// don't initialise
     if(GetSightRayHitLocation(HitLocation))
     {
-        //UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString()); // outing the final variable to console // all others must work for this to happen
-        //tellcontroller tank to aim at his point
         GetControlledTank()->AimAt(HitLocation);
     }
-    
-   
 }
 //GetWorld Location of linetrace through crosshair, true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
@@ -61,25 +50,13 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
     int32 ViewportSizeX, ViewportSizeY;
     GetViewportSize(ViewportSizeX, ViewportSizeY);
     auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation); // could use FVector to be specific rather than auto
-    //UE_LOG(LogTemp, Warning, TEXT("Screenlocation: %s"), *ScreenLocation.ToString());
-
-    //De-project screen position to a a world direction // refactored into GetLookDirection() below
-    // FVector CameraWorldLocation;
-    // FVector WorldDirection; // renamed to LookDirection in refactor
-    // //bool DeprojectScreenPositionToWorld(float ScreenX,float ScreenY,FVector & WorldLocation,FVector & WorldDirection) const // from docs use below
-    // if(DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, WorldDirection)) // if true as a bool
-    // {
-    //     UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *WorldDirection.ToString());
-    // }
-
+   
     FVector LookDirection;
     if(GetLookDirection(ScreenLocation, LookDirection))
     {
         //line trace along look direction, see hwat hit up to max range
         GetLookVectorHitLocation(LookDirection, HitLocation); // functions sets the hitlocation to OUT from GetSightRayHitLocation
-        //UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *LookDirection.ToString());   
     }
-
     
     return true;
 }
@@ -89,12 +66,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
     FHitResult HitResult;  // stre the hit result as an FHitResult
     auto StartLocation = PlayerCameraManager->GetCameraLocation(); // playercameramanager is a variable of APlayerController
     auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
-    // if(//Linetrace success) // psuedo code of below
-    // {
-    //     //set hit location
-    //     return true;
-    // }
-    // return false;
 
     if(GetWorld()->LineTraceSingleByChannel(
          HitResult, //this is what is OUT
