@@ -23,15 +23,16 @@ void ATank::BeginPlay()
 
 void ATank::AimAt(FVector HitLocation)
 {
-		if(!TankAimingComponent) {return;}
+		if(!ensure(TankAimingComponent)) {return;}
 		TankAimingComponent->AimAt(HitLocation, LaunchSpeed); // this is the cause of crash, needs protecting
 }
 
 void ATank::Fire()
 {
+	if(!ensure(Barrel)) {return;}
 	bool isReloaded = (FPlatformTime::Seconds() - LastFiretime) > ReloadTimeInSeconds;
-	//if(!Barrel) {return;} //change and move method into, as below
-	if(Barrel && isReloaded)
+	
+	if(isReloaded)
 	{
 		//spawn projectile
 			auto Projectile = GetWorld()->SpawnActor<AProjectile>(
@@ -40,7 +41,7 @@ void ATank::Fire()
 			Barrel->GetSocketRotation(FName("Projectile")) // rotation to spawn
 		); 
 		
-		if(!Projectile) {return;} 		
+		if(!ensure(Projectile)) {return;} 		
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFiretime = FPlatformTime::Seconds();
 	}

@@ -27,14 +27,14 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
    	// access tracks to move
-    if(!LeftTrack || !RightTrack) {return;} // needed to protect // i.e. they exist
+    if(!ensure(LeftTrack || RightTrack)) {return;} // needed to protect // i.e. they exist
     LeftTrack->SetThrottle(Throw); //IWYU
     RightTrack->SetThrottle(Throw);
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw) // called this to say what a +value does, not just called turn
 {
-    if(!LeftTrack || !RightTrack) {return;}
+    if(!ensure(LeftTrack || RightTrack)) {return;}
     LeftTrack->SetThrottle(Throw);
     RightTrack->SetThrottle(-Throw);
 }

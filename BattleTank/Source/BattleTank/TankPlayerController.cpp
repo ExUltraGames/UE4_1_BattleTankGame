@@ -9,7 +9,7 @@ void ATankPlayerController::BeginPlay()// so we can log out
 {
     Super::BeginPlay();
     auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-    if(AimingComponent)
+    if(ensure(AimingComponent))
     {
         FoundAimingComponent(AimingComponent);// to pass for BlueprintImplementableEvent
     }
@@ -34,7 +34,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrossHair()
 {
-    if(!GetControlledTank())    { return; }
+    if(!ensure(GetControlledTank()))    { return; }
     FVector HitLocation; // out parameter// don't initialise
     if(GetSightRayHitLocation(HitLocation))
     {
