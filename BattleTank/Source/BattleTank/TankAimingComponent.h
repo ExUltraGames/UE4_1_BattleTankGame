@@ -35,7 +35,7 @@ public:
 
 protected: // access from subclass the TankAimingComponent
 	UPROPERTY(BlueprintReadOnly, Category = State_Running)
-	EFiringState FiringState = EFiringState::Reloading; // Declare and initialise
+	EFiringState FiringState = EFiringState::Aiming; // Declare and initialise
 
 private:
 	UTankAimingComponent(); // moved in refactor

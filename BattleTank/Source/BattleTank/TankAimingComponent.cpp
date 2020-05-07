@@ -40,7 +40,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal(); //outputs the unit vector from FVector
 		MoveBarrelTowards(AimDirection);
-		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim Found"),GetWorld()->GetTimeSeconds());
 	}
 }
 
@@ -50,7 +49,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();  // gives roll pitch and yaw of barrel //GetForwardVector  =  direction of barrel // Rotation() turn into a struct FRotator, roll pitch Yaw
 	auto AimAsRotator = AimDirection.Rotation();
-	//UE_LOG(LogTemp, Warning, TEXT("AimasRotator: %s"), *AimAsRotator.ToString()); // see what it kicks out
 	auto DeltaRotator = AimAsRotator - BarrelRotator; // difference
 	
 	Barrel->Elevate(DeltaRotator.Pitch); // removed magic number

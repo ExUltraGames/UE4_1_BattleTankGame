@@ -71,7 +71,7 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT43_UE4 246: DotProduct() Vector Operator ( Tank AI Movement forward back, COS)
 * BT44_UE4 247: CrossProduct() Vector Operator (tank AI rotate, SINE)
 * BT45_UE4 248: Finalising Class Code (Finish Tank Movement)
-* BT46_UE4 249: Use BluePrint Variables (UI Widget colour aiming)
+* BT46_UE4 249: Use BluePrint Variables (UI Widget colour aiming) NOTE: (Aiming Comp Reference)
 * BT47_UE4 250: Using Enum(erations)
 * BT48_UE4 251: Refactor AimComponent, compiles but HARD CRASH
 * BT49_UE4 252: Visual Studio Debugging (Hard Crash)+ code deletion & 253: Constructor and Begin Play Timing
@@ -79,3 +79,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT51_UE4 255: BluePrintImplementable Event (TankPlayer and aiming)
 * BT52_UE4 256: ensure Assertion & Nullptr & error finding by pointer protection
 * BT53_UE4 257: Dependancy Mapping (analysis of C++ and .h files, map architecture)
+* BT54_UE4 259: Starting from Green (Refactoring the architecture)

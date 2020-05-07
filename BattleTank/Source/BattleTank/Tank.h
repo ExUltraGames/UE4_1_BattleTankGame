@@ -40,6 +40,7 @@ private://
 	//UClass* ProjectileBlueprint; // or can TSubclassOf<UProjectileBlueprint> ProjectileBlueprint; as this enforces a choice, smaller selection
 	TSubclassOf<AProjectile> ProjectileBlueprint; // Projectile blueprint based on projectile.h class which is an Actor
 
+	//TODO remove once firing is moved to AimingComponent // leave copy
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 10000; //= 1000m/s = todo find a sensible default value for tweaking in BP
 

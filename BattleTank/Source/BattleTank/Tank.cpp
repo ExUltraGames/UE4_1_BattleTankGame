@@ -11,13 +11,13 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false; // removed tick as not needed = optimisation
-	UE_LOG(LogTemp, Warning, TEXT("DONKEY: %s Constructor Called"), *GetName());
 }
 
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("DONKEY: %s BeginPlay Called"), *GetName());
+	
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>(); // used to FIX AimAt, make GREEN //BeginPLay happens before below in compile
 }
 
 void ATank::AimAt(FVector HitLocation)

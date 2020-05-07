@@ -9,14 +9,8 @@ void ATankPlayerController::BeginPlay()// so we can log out
 {
     Super::BeginPlay();
     auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-    if(ensure(AimingComponent))
-    {
-        FoundAimingComponent(AimingComponent);// to pass for BlueprintImplementableEvent
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Player Controller, no aiming component found"));
-    }
+    if(!ensure(AimingComponent)) {return;}
+    FoundAimingComponent(AimingComponent);// to pass for BlueprintImplementableEvent
 }
 
 //tick // runs every frame setup use super
