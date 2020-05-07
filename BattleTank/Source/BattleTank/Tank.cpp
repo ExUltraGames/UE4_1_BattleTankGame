@@ -1,7 +1,6 @@
 // Copyright theZombieroom
 
 #include "Engine/World.h"
-#include "TankAimingComponent.h"// needed for tankaimingcomponent
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "Tank.h"
@@ -16,14 +15,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>(); // used to FIX AimAt, make GREEN //BeginPLay happens before below in compile
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-		if(!ensure(TankAimingComponent)) {return;}
-		TankAimingComponent->AimAt(HitLocation, LaunchSpeed); // this is the cause of crash, needs protecting
 }
 
 void ATank::Fire()

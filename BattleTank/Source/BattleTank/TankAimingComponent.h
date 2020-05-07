@@ -30,8 +30,7 @@ public:
 	// Sets default values for this component's properties
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
-	
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);// aimat doesn't need launchspeed from Tank anymore, as below, removed
 
 protected: // access from subclass the TankAimingComponent
 	UPROPERTY(BlueprintReadOnly, Category = State_Running)
@@ -45,4 +44,7 @@ private:
 	
 	UTankTurret* Turret = nullptr;
 	void MoveTurretTowards(FVector AimDirection);
+	
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 10000; //= 1000m/s = todo find a sensible default value for tweaking in BP
 };

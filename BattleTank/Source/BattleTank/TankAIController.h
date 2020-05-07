@@ -7,9 +7,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-
-class ATank;
-
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
@@ -20,8 +17,6 @@ public:
 private:
 	virtual void BeginPlay() override; //checks in hieracy for beginplay
 	virtual void Tick(float DeltaTime) override;
-	// ATank* GetControlledTank() const; // pointer to an AITank
-	// ATank* GetPlayerTank() const; // returns pointer to player tank
 	
 	UPROPERTY(EditDefaultsOnly)
 	float AcceptanceRadius = 3000; //assume cm for now = 30m away 

@@ -17,7 +17,7 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Barrel = BarrelToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation) // float LaunchSpeed no longer need to be passed in due to refactor
 {
 
 	if(!ensure(Barrel)) {return;}

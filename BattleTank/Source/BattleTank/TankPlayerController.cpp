@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankPlayerController.h"
 
@@ -8,8 +7,9 @@
 void ATankPlayerController::BeginPlay()// so we can log out
 {
     Super::BeginPlay();
-    auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+    auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
     if(!ensure(AimingComponent)) {return;}
+    //TankAimingComponent = FindComponentByClass<UTankAimingComponent>(); // used to FIX AimAt, make GREEN //BeginPLay happens before below in compile
     FoundAimingComponent(AimingComponent);// to pass for BlueprintImplementableEvent
 }
 
@@ -20,21 +20,18 @@ void ATankPlayerController::Tick(float DeltaTime)
     AimTowardsCrossHair();
 }
 
-//method returns a pointer of tank possesed
-ATank* ATankPlayerController::GetControlledTank() const
-{
-    return Cast<ATank>(GetPawn()); //returns pawn player controller possessing // cast forces a data type to be converted  
-}
-
 void ATankPlayerController::AimTowardsCrossHair()
 {
-    if(!ensure(GetControlledTank()))    { return; }
+    auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+    if(!ensure(AimingComponent)) {return;}
+
     FVector HitLocation; // out parameter// don't initialise
     if(GetSightRayHitLocation(HitLocation))
     {
-        GetControlledTank()->AimAt(HitLocation);
+        AimingComponent->AimAt(HitLocation);
     }
 }
+
 //GetWorld Location of linetrace through crosshair, true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {

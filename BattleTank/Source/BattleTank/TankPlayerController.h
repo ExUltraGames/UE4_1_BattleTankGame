@@ -8,7 +8,6 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h" //must be last include
 
-class ATank;
 class UTankAimingComponent;
 /**
  * Responsible for helping the player aim.
@@ -22,8 +21,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController // atankpl
 public:
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	ATank* GetControlledTank() const; // pointer to a Tank
+
+	UPROPERTY(BlueprintReadOnly) // for UI Widget
+	UTankAimingComponent* TankAimingComponent = nullptr;// creating pointer to aiming component , need the component to be made in c++ tankaimingcomponent
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Setup)// don't need implementation with this macro // wire up in BP
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);// forward declare

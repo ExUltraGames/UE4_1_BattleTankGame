@@ -80,3 +80,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT52_UE4 256: ensure Assertion & Nullptr & error finding by pointer protection
 * BT53_UE4 257: Dependancy Mapping (analysis of C++ and .h files, map architecture)
 * BT54_UE4 259: Starting from Green (Refactoring the architecture)
+* BT55_UE4 260: Aiming without the TANK (Refactoring)
