@@ -5,10 +5,10 @@
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-    //auto Time = GetWorld()->GetTimeSeconds();
-    //auto Name = GetName();
+    // auto Time = GetWorld()->GetTimeSeconds();
+    // auto Name = GetName(); // local name i.e. track // GetOwner()->GetName() gives name of Owner i.e. Tank
     //Throttle = FMath::Clamp<float>(Throttle, -1, +1);
-	//UE_LOG(LogTemp, Warning, TEXT("Throttle %f"), Throttle);
+	//UE_LOG(LogTemp, Warning, TEXT("%s Throttle %f"), *GetOwner()->GetName(), Throttle);
 
     auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
     auto ForceLocation = GetComponentLocation(); // location of track

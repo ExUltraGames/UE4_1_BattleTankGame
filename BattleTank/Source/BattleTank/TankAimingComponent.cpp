@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Engine/World.h"
+#include "Projectile.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "TankAimingComponent.h"
@@ -8,7 +9,23 @@
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
-	PrimaryComponentTick.bCanEverTick = false; // TODO
+	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void UTankAimingComponent::BeginPlay()// so we can log out
+{
+	//so that first fire is after initial reload
+	LastFiretime = FPlatformTime::Seconds();
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	if ((FPlatformTime::Seconds() - LastFiretime) > ReloadTimeInSeconds)
+	{
+		FiringState = EFiringState::Reloading;
+	}
+
+	//TODO Handle Aiming and locked states
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
@@ -39,6 +56,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation) // float LaunchSpeed no lo
 	if	(bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal(); //outputs the unit vector from FVector
+		//UE_LOG(LogTemp, Warning, TEXT("%s aimdirection is: %s"), *GetOwner()->GetName(), *AimDirection.ToString());
 		MoveBarrelTowards(AimDirection);
 	}
 }
@@ -53,4 +71,22 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	
 	Barrel->Elevate(DeltaRotator.Pitch); // removed magic number
 	Turret->RotateT(DeltaRotator.Yaw);
+}
+
+void UTankAimingComponent::Fire()
+{
+	if(FiringState != EFiringState::Reloading)
+	{
+		//spawn projectile
+			if(!ensure(Barrel)) {return;} // move to where need and spilt for more info
+			if(!ensure(ProjectileBlueprint)) {return;}
+			auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint, // class to spawn
+			Barrel->GetSocketLocation(FName("Projectile")), // location to spawn
+			Barrel->GetSocketRotation(FName("Projectile")) // rotation to spawn
+		); 
+		
+		if(!ensure(Projectile)) {return;} 
+		Projectile->LaunchProjectile(LaunchSpeed);
+	}
 }
