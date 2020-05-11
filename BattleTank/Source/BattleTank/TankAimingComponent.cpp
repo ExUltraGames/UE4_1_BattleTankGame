@@ -18,20 +18,35 @@ void UTankAimingComponent::BeginPlay()// so we can log out
 	LastFiretime = FPlatformTime::Seconds();
 }
 
-void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
-{
-	if ((FPlatformTime::Seconds() - LastFiretime) > ReloadTimeInSeconds)
-	{
-		FiringState = EFiringState::Reloading;
-	}
-
-	//TODO Handle Aiming and locked states
-}
-
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	Turret = TurretToSet;
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	auto LastTimeFireGap = (FPlatformTime::Seconds() - LastFiretime);
+	if ( LastTimeFireGap < ReloadTimeInSeconds )// can use GetWorld()->GetTimeSeconds()
+	{
+		FiringState = EFiringState::Reloading;
+	}
+	else if (IsBarrelMoving())
+	{
+		FiringState = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringState = EFiringState::Locked;
+	}
+}
+
+bool  UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) {return false;} // protect // note 
+	auto BarrelForward = Barrel->GetForwardVector();
+	
+	return !BarrelForward.Equals(AimDirection, 0.01);//vectors are equal using FVector::Equals method
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation) // float LaunchSpeed no longer need to be passed in due to refactor
@@ -55,7 +70,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation) // float LaunchSpeed no lo
 			);
 	if	(bHaveAimSolution)
 	{
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal(); //outputs the unit vector from FVector
+		AimDirection = OutLaunchVelocity.GetSafeNormal(); //change from local to member variable, see .h
 		//UE_LOG(LogTemp, Warning, TEXT("%s aimdirection is: %s"), *GetOwner()->GetName(), *AimDirection.ToString());
 		MoveBarrelTowards(AimDirection);
 	}
@@ -88,5 +103,6 @@ void UTankAimingComponent::Fire()
 		
 		if(!ensure(Projectile)) {return;} 
 		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFiretime = FPlatformTime::Seconds();
 	}
 }
