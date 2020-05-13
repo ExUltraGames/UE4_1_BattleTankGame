@@ -82,4 +82,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT54_UE4 259: Starting from Green (Refactoring the architecture)
 * BT55_UE4 260: Aiming without the TANK (Refactoring)
 * BT56_UE4 261 & 262: Finishing refactor, solving ai movement issue (BP) + adding TickComponent() Back to an actor
-* BT56_UE4 263: are two floats equal + sorted firing
+* BT57_UE4 263: are two floats equal + sorted firing
+* BT58_UE4 264: Programmatic Sideways Friction (stop slidding) - causes catastrophic FAILURE of movement RESTORE TO PREVIOUS CODE AND SKIP
