@@ -1,3 +1,4 @@
+
 # UE4_1_BattleTankGame
 Open world head to head tank battle game, with AI, terrain and advanced control, UE4
 For Github Repository click [here](https://github.com/chineseburn/UE4_1_BattleTank)
@@ -84,4 +85,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT56_UE4 261 & 262: Finishing refactor, solving ai movement issue (BP) + adding TickComponent() Back to an actor
 * BT57_UE4 263: are two floats equal + sorted firing
 * BT58_UE4 264: Programmatic Sideways Friction (stop slidding) - causes catastrophic FAILURE of movement RESTORE TO PREVIOUS CODE AND SKIP
-* BT58_UE4 RESTORED working coding post lecture 264
+* BT59_UE4 RESTORED working coding post lecture 264
+* BT60_UE4 265: RESTORE from course Github post OnComponentHit Event and solution clean 

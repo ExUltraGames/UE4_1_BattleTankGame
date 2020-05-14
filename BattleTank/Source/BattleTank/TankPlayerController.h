@@ -1,51 +1,45 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright EmbraceIT Ltd.
 
 #pragma once
 
-//#include "Tank.h" // for ATank // forward declare
-#include "CoreMinimal.h"
-#include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
-#include "TankPlayerController.generated.h" //must be last include
+#include "TankPlayerController.generated.h" // Must be the last include
 
-class UTankAimingComponent;
+class UTankTankAimingComponent;
+
 /**
  * Responsible for helping the player aim.
  */
-
 UCLASS()
-class BATTLETANK_API ATankPlayerController : public APlayerController // atankplayercontroller is based on APLayerController
+class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
-public:
 
 protected:
-
-	UPROPERTY(BlueprintReadOnly) // for UI Widget
-	UTankAimingComponent* TankAimingComponent = nullptr;// creating pointer to aiming component , need the component to be made in c++ tankaimingcomponent
-
-	UFUNCTION(BlueprintImplementableEvent, Category = Setup)// don't need implementation with this macro // wire up in BP
-	void FoundAimingComponent(UTankAimingComponent* AimCompRef);// forward declare
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
-	virtual void BeginPlay() override; //checks in hieracy for beginplay
-	virtual void Tick(float DeltaTime) override;
-	void AimTowardsCrossHair(); // start tank moving barrel
+	virtual void BeginPlay() override;
 
-	//return OUT parameter, true if hit landscape
-	bool GetSightRayHitLocation(FVector& OutHitLocation) const; // out parameters make a reference to use / look for &
-	
-	UPROPERTY(EditDefaultsOnly) // set these to editanywhere // if move pixel in BP, would need to change these values
-	float CrossHairXLocation = 0.5f;
-	
+	virtual void Tick( float DeltaTime ) override;
+
+	// Start the tank moving the barrel so that a shot would hit where
+	// the crosshair intersects the world
+	void AimTowardsCrosshair();
+
+	// Return an OUT parameter, true if hit landscape
+	bool GetSightRayHitLocation(FVector& HitLocation) const;
+
 	UPROPERTY(EditDefaultsOnly)
-	float CrossHairYLocation = 0.3333;
+	float CrosshairXLocation = 0.5;
+
+	UPROPERTY(EditDefaultsOnly)
+	float CrosshairYLocation = 0.3333;
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
 
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const; // refactor
-	bool GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const;
-
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 };
