@@ -87,3 +87,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT58_UE4 264: Programmatic Sideways Friction (stop slidding) - causes catastrophic FAILURE of movement RESTORE TO PREVIOUS CODE AND SKIP
 * BT59_UE4 RESTORED working coding post lecture 264
 * BT60_UE4 265: RESTORE from course Github post OnComponentHit Event and solution clean 
+* BT61_UE4 266: Avoiding Boolean Flags & refactoring movement in tanktrack
