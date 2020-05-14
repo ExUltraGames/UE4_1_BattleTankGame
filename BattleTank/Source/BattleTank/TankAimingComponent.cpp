@@ -14,6 +14,7 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::BeginPlay()// so we can log out
 {
+	Super::BeginPlay();
 	//so that first fire is after initial reload
 	LastFiretime = FPlatformTime::Seconds();
 }

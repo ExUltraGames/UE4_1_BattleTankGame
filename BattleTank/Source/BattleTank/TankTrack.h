@@ -23,11 +23,5 @@ public:
 
 	//Max force per track in Newtons (force = mass (kg)* acceleration (m/s2)), assume no friction to start
 	UPROPERTY(EditDefaultsOnly) // effect all tanks
-	float TrackMaxDrivingForce = 200000; //(40,000 * 2.682 (0to60 in 10s)) // however things seem slower  // set to 40,000 or 1G of acceleration
-
-private:
-
-	UTankTrack();
-
-	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	float TrackMaxDrivingForce = 400000; //(40,000 * 2.682 (0to60 in 10s)) // however things seem slower  // set to 40,000 or 1G of acceleration
 };

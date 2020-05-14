@@ -84,3 +84,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT56_UE4 261 & 262: Finishing refactor, solving ai movement issue (BP) + adding TickComponent() Back to an actor
 * BT57_UE4 263: are two floats equal + sorted firing
 * BT58_UE4 264: Programmatic Sideways Friction (stop slidding) - causes catastrophic FAILURE of movement RESTORE TO PREVIOUS CODE AND SKIP
+* BT58_UE4 RESTORED working coding post lecture 264
