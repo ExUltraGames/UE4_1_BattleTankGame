@@ -45,6 +45,12 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	}
 }
 
+// returns FiringState for use in AIController
+EFiringState UTankAimingComponent::GetFiringState() const // const so can't change
+{
+	return FiringState;
+}
+
 bool UTankAimingComponent::IsBarrelMoving()
 {
 	if (!ensure(Barrel)) { return false; }
@@ -116,3 +122,5 @@ void UTankAimingComponent::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
+

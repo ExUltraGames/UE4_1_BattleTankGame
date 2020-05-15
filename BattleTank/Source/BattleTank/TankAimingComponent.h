@@ -34,6 +34,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
+	// for AIController
+	EFiringState GetFiringState() const; // const so can't change
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
