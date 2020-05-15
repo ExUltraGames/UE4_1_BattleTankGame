@@ -88,3 +88,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT59_UE4 RESTORED working coding post lecture 264
 * BT60_UE4 265: RESTORE from course Github post OnComponentHit Event and solution clean 
 * BT61_UE4 266: Avoiding Boolean Flags & refactoring movement in tanktrack
+* BT62_UE4 267: Improve Tank Aiming (shortest route & aim)
