@@ -98,3 +98,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT69_UE4 274/275: Particle Systems
 * BT68_UE4 274 redo of particle system cpp
 * BT69_UE4 275 redo & fix of particle system cpp
+* BT70_UE4 276: FAttachmentTransformRules (ImpactBlast component)
