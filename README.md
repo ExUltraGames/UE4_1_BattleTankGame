@@ -96,3 +96,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT67_UE4 273: Preparing for Particles (Setup Projectile Components & Create sub-objects)
 * BT68_UE4 Added minimal Startcontent source control
 * BT69_UE4 274/275: Particle Systems
+* BT68_UE4 274 redo of particle system cpp
+* BT69_UE4 275 redo & fix of particle system cpp
