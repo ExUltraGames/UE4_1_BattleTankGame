@@ -99,3 +99,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT68_UE4 274 redo of particle system cpp
 * BT69_UE4 275 redo & fix of particle system cpp
 * BT70_UE4 276: FAttachmentTransformRules (ImpactBlast component)
+* BT71_UE4 277: Radial Force component (Impulse)  & Caching > collisons & explosion

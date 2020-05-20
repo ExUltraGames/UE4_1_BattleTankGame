@@ -14,6 +14,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	//bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
+	//ProjectileBlueprint->ClassDefaultObject;
 }
 
 void UTankAimingComponent::BeginPlay()
@@ -21,6 +22,7 @@ void UTankAimingComponent::BeginPlay()
 	Super::BeginPlay();
 	// So that first first is after initial reload
 	LastFireTime = FPlatformTime::Seconds();
+	
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
@@ -121,11 +123,17 @@ void UTankAimingComponent::Fire()
 	{
 		// Spawn a projectile at the socket location on the barrel
 		if (!ensure(Barrel)) { return; }
-		if (!ensure(ProjectileBlueprint)) { return; }
+		if (!ensure(ProjectileBlueprint)) { return;  }
+		
+		// example how to use this type of thing FActorSpawnParameters // this caused only 1 projectile to be allowed in scene
+		//FActorSpawnParameters NewParams = FActorSpawnParameters();
+		//NewParams.Name = (FName("Projectile"));
+
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile"))
+			//NewParams
 			);
 
 		Projectile->LaunchProjectile(LaunchSpeed);

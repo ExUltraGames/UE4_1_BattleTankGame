@@ -22,7 +22,7 @@ class UTankTurret;
 class AProjectile;
 
 // Holds barrel's properties and Elevate method
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -67,12 +67,14 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
+	float ReloadTimeInSeconds = 0.1;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 RoundsLeft = 3;
+	int32 RoundsLeft = 20;
 
 	double LastFireTime = 0;
 	
 	FVector AimDirection;
+
+	
 };
