@@ -12,6 +12,22 @@ ATank::ATank()
 	//SetActorEnableCollision(true);
 }
 
+float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
+{
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount); // turn float to int
+	int32 DamageToApply = FMath::Clamp<int32>(DamageAmount, 0, CurrentHealth); // needs <int32>
+
+	CurrentHealth -= DamageToApply;
+	if (CurrentHealth <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Tank Died"));
+	}
+
+	//UE_LOG(LogTemp, Warning, TEXT("DamageAmount: %f, DamageToApply: %i"), DamageAmount, DamageToApply);// note %f and %i
+
+	return DamageToApply;
+}	
+
 //leave in as this is how apply to actor
 //void ATank::BeginPlay()
 //{

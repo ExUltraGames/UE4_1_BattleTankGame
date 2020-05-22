@@ -66,7 +66,7 @@ void UTankTrack::ApplyDownForce()
 
 	//UE_LOG(LogTemp, Warning, TEXT("CorrectionAccleration: %s"), *CorrectionAcceleration.ToString());
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration) / 2;
+	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration) / 4;
 	//UE_LOG(LogTemp, Warning, TEXT("TankRoot: %s CorrectionForce: %s"), *TankRoot->GetName(), *CorrectionForce.ToString());
 	TankRoot->AddForce(CorrectionForce);
 }

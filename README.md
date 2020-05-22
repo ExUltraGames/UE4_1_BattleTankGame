@@ -102,3 +102,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT71_UE4 277: Radial Force component (Impulse)  & Caching > collisons & explosion
 * BT72_UE4 278: Get TimerManager() - projectile destruction
 * Fixed visibility of sphere
+* preventing Tank fly (adding DownForce)
+* BT73 279: TakeDamage() on Actors (Health)
