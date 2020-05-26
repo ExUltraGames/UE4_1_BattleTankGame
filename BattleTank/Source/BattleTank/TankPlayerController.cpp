@@ -5,21 +5,6 @@
 #include "Tank.h"
 #include "TankPlayerController.h"
 
-
-void ATankPlayerController::BeginPlay()
-{
-	Super::BeginPlay();
-	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) { return; }
-	FoundAimingComponent(AimingComponent);
-}
-
-void ATankPlayerController::Tick(float DeltaTime)
-{
-	Super::Tick( DeltaTime );
-	AimTowardsCrosshair();
-}
-
 void ATankPlayerController::SetPawn(APawn* InPawn)
 {
 	Super::SetPawn(InPawn);
@@ -35,8 +20,23 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 
 void ATankPlayerController::OnPlayerTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PlayerTankDeath Received"));
+	StartSpectatingOnly();
 }
+
+void ATankPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
+	FoundAimingComponent(AimingComponent);
+}
+
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick( DeltaTime );
+	AimTowardsCrosshair();
+}
+
 
 void ATankPlayerController::AimTowardsCrosshair()
 {

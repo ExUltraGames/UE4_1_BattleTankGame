@@ -12,6 +12,12 @@ ATank::ATank()
 	//SetActorEnableCollision(true);
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+	CurrentHealth = StartingHealth;
+}
+
 float ATank::GetHealthPercent() const
 {
 	return (float)CurrentHealth / (float)StartingHealth; // cast healths to floats

@@ -29,12 +29,14 @@ public:
 private:
 	
 	ATank();
-	// Sets default values for this pawn's properties
+
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	int32 StartingHealth = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = Health)// only change in code but need visible
-	int32 CurrentHealth = StartingHealth; // make int as don't want to compare floats
+	int32 CurrentHealth; // remove initiliase otherwise always = 100 // intiliase in BeginPlay not constructor
 
 	//virtual void BeginPlay() override;
 

@@ -108,3 +108,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT75_UE4 281: The Observer Pattern (Dynamic Multi Cast Delegate, DCMDs)
 READ: http://gameprogrammingpatterns.com/observer.html
 * BT75_UE4 281b: The Observer Pattern (Dynamic Multi Cast Delegate, DCMDs) - continued
+* BT76_UE4 282: Finishing Off - Part 1 & 2
