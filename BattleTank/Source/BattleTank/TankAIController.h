@@ -22,6 +22,11 @@ private: // make private as a child class
 private:
 	virtual void BeginPlay() override;
 
+	virtual void SetPawn(APawn* InPawn) override; // called when possesed
+
+	UFUNCTION()
+	void OnAITankDeath();
+
 	virtual void Tick(float DeltaSeconds) override;
 	
 };

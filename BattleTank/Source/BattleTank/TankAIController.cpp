@@ -2,12 +2,32 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "Tank.h" // so implemetn OnDeath()
 #include "TankAIController.h"
+
 // Depends on movement component via pathfinding system
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ATankAIController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		//subscribe our local method to Tanks Death Event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnAITankDeath);
+	}
+}
+
+void ATankAIController::OnAITankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnAITankDeath Received") );
 }
 
 // Called every frame

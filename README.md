@@ -105,3 +105,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * preventing Tank fly (adding DownForce)
 * BT73_UE4 279: TakeDamage() on Actors (Health)
 * BT74_UE4 280 Blueprint & healthbars (Getting Reference to Tank and pass into widget)
+* BT75_UE4 281: The Observer Pattern (Dynamic Multi Cast Delegate, DCMDs)
+READ: http://gameprogrammingpatterns.com/observer.html
