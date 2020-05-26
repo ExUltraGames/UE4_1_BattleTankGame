@@ -107,3 +107,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT74_UE4 280 Blueprint & healthbars (Getting Reference to Tank and pass into widget)
 * BT75_UE4 281: The Observer Pattern (Dynamic Multi Cast Delegate, DCMDs)
 READ: http://gameprogrammingpatterns.com/observer.html
+* BT75_UE4 281b: The Observer Pattern (Dynamic Multi Cast Delegate, DCMDs) - continued
