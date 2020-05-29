@@ -76,5 +76,7 @@ private:
 	
 	FVector AimDirection;
 
+	float MinElevation = 0.f;
+
 	
 };

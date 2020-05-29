@@ -105,8 +105,20 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimInDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimInDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	auto Elevation = Turret->RelativeRotation.Yaw;
+	UE_LOG(LogTemp, Warning, TEXT("Elevation is: %f"), Elevation);
+	if (Elevation <= 12.f && Elevation >= -12.f)
+	{
+		MinElevation = -10.f;
+		Barrel->Elevate(DeltaRotator.Pitch, MinElevation);
+	}
+	else 
+	{
+		MinElevation = 0.f;
+		Barrel->Elevate(DeltaRotator.Pitch, MinElevation);
+	}
 	// always Yaw shortest route
-	Barrel->Elevate(DeltaRotator.Pitch);
+	
 	if (FMath::Abs(DeltaRotator.Yaw) < 180)//absolute value +or-
 	{
 		Turret->RotateT(DeltaRotator.Yaw);
@@ -115,6 +127,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimInDirection)
 	{
 		Turret->RotateT(-DeltaRotator.Yaw);
 	}
+
+	//TODO if Turret RelativeRotation.Yaw is -12 to 12 degress set Barrel MinElevationDegrees = -10
 }
 
 void UTankAimingComponent::Fire()
