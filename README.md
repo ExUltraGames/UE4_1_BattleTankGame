@@ -112,3 +112,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT75_UE4 282b: The Observer Pattern (Dynamic Multi Cast Delegate, DCMDs) - continued (SetPawn())
 * BT76_UE4 283/284: Finishing Off - Part 1 & 2 (StartSpectatingOnly(), DetachFromControllerPendingDestroy())
 * Renumbering of lessons, adding methods to readme
+* BT76_UE4 287: Swiching Cameras AND setting Tank Barrel MinElevation
