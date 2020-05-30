@@ -112,6 +112,7 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT75_UE4 282b: The Observer Pattern (Dynamic Multi Cast Delegate, DCMDs) - continued (SetPawn())
 * BT76_UE4 283/284: Finishing Off - Part 1 & 2 (StartSpectatingOnly(), DetachFromControllerPendingDestroy())
 * Renumbering of lessons, adding methods to readme
-* BT76_UE4 287: Swiching Cameras AND setting Tank Barrel MinElevation
+* BT77_UE4 287: Swiching Cameras AND setting Tank Barrel MinElevation
 * Tank Barrel MinElevation, removing magic numbers and making BP editable
-* BT76_UE4 291: Creating Physics Constraints
+* BT78_UE4 291: Creating Physics Constraints
+* BT79_UE4 292: Making Springs (Suspension, shock absorption) + Physics stuff.
