@@ -14,12 +14,10 @@ void UTankTrack::BeginPlay()
 	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
-void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-
-
-	
-}
+//void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+//{
+// not needed
+//}
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {	// only get force when tracks on the ground
