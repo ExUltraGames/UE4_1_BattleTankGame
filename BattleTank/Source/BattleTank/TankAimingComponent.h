@@ -76,7 +76,18 @@ private:
 	
 	FVector AimDirection;
 
-	float MinElevation = 0.f;
+	//Degree to front, from + to - range
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float FrontFiringDegreeRange = 13.f;
+
+	//Min Barrel Elevation
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float BarrelMinElevation = 0.f;
+
+	//Applies to FrontFiringDegreeRange only
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float BarrelMinElevationFront = -8.f;
+
 
 	
 };
