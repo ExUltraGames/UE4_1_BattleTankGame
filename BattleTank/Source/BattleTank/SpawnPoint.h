@@ -28,7 +28,6 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<ASprungWheel> SpawnClass; // change to type of AActor to redue BP Spawn Class list

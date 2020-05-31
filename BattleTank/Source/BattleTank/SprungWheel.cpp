@@ -12,9 +12,6 @@ ASprungWheel::ASprungWheel()
 	PhysicsConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("PhysicsConstraint"));
 	//PhysicsConstraint->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	SetRootComponent(PhysicsConstraint);//IWYU // need physics constarint as Root?? for AttachToComponent
-
-	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
-	Mass->SetupAttachment(PhysicsConstraint);
 	
 	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
 	//Wheel->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform); // use below instead
@@ -27,15 +24,16 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//see about error
-	if (GetAttachParentActor())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Not Null"));//with SpawnActorDeferred()and FinishSpawningActor()
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Null"));//SpawnActor()
-	}
+	SetupConstraints();
+}
+
+//instead of early returns in BeginPlay = cleaner, create a new function
+void ASprungWheel::SetupConstraints()
+{
+	if (!GetAttachParentActor()) { return; }
+	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
+	if (!BodyRoot) { return; }
+	PhysicsConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Wheel, NAME_None);
 }
 
 // Called every frame

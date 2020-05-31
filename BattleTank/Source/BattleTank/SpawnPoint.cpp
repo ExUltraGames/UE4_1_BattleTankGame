@@ -20,12 +20,9 @@ void USpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto NewActor = GetWorld()->SpawnActorDeferred<ASprungWheel>(SpawnClass, GetComponentTransform());//IWYU // this spawns at correct location
-	//UE_LOG(LogTemp,Warning, TEXT("After Spawn"));
+	auto NewActor = GetWorld()->SpawnActorDeferred<ASprungWheel>(SpawnClass, GetComponentTransform());
 	if (!NewActor) {return;}
-	//NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform);
-	//above not working in BeginPlay// use Logs to see what wrong // error due to order created // do differently // use SpawnActorDeffered() and FinishSpawningActor()
-	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);//change to World, as location of spawn already set
+	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
 	UGameplayStatics::FinishSpawningActor(NewActor, GetComponentTransform());
 }
 
