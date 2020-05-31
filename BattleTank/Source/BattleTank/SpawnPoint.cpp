@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "SprungWheel.h"
 #include "SpawnPoint.h"
 
 // Sets default values for this component's properties
@@ -19,7 +20,7 @@ void USpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());//IWYU // this spawns at correct location
+	auto NewActor = GetWorld()->SpawnActorDeferred<ASprungWheel>(SpawnClass, GetComponentTransform());//IWYU // this spawns at correct location
 	//UE_LOG(LogTemp,Warning, TEXT("After Spawn"));
 	if (!NewActor) {return;}
 	//NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform);

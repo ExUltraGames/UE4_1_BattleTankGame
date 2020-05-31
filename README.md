@@ -119,3 +119,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT80_UE4 293: Converting The Spring to C++ CPP (SprungWheel) (creating C++ components > BP)
 * BT81_UE4 294: Attachment, Actors & Components (Spawnable Component)
 * BT82_UE4 295: SpawnActorDeffered() / FinishSpawningActor() and BeginPlay
+* AActor to ASprungWheel class to reduce Tank_BP SpawnPoint Component > Setup > Spawn ClassList

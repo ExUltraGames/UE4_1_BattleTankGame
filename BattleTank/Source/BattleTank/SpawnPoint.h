@@ -11,6 +11,9 @@
 #include "SpawnPoint.generated.h"
 
 
+// Forward Declaration
+class ASprungWheel;// remember #include "SprungWheel.h" in .cpp
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API USpawnPoint : public USceneComponent
 {
@@ -28,5 +31,5 @@ protected:
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AActor> SpawnClass;
+	TSubclassOf<ASprungWheel> SpawnClass; // change to type of AActor to redue BP Spawn Class list
 };
