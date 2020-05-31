@@ -19,9 +19,13 @@ void USpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto NewActor = GetWorld()->SpawnActor<AActor>(SpawnClass);//IWYU
+	auto NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());//IWYU // this spawns at correct location
+	//UE_LOG(LogTemp,Warning, TEXT("After Spawn"));
 	if (!NewActor) {return;}
-	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform);// need physics constarint as Root??
+	//NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform);
+	//above not working in BeginPlay// use Logs to see what wrong // error due to order created // do differently // use SpawnActorDeffered() and FinishSpawningActor()
+	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);//change to World, as location of spawn already set
+	UGameplayStatics::FinishSpawningActor(NewActor, GetComponentTransform());
 }
 
 

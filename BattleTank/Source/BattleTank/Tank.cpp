@@ -26,7 +26,7 @@ float ATank::GetHealthPercent() const
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
 	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount); // turn float to int
-	int32 DamageToApply = FMath::Clamp<int32>(DamageAmount, 0, CurrentHealth); // needs <int32>
+	int32 DamageToApply = FMath::Clamp<int32>(DamagePoints, 0, CurrentHealth); // needs <int32>
 
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0)

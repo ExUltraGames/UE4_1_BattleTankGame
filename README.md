@@ -118,3 +118,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT79_UE4 292: Making Springs (Suspension, shock absorption) + Physics stuff.
 * BT80_UE4 293: Converting The Spring to C++ CPP (SprungWheel) (creating C++ components > BP)
 * BT81_UE4 294: Attachment, Actors & Components (Spawnable Component)
+* BT82_UE4 295: SpawnActorDeffered() / FinishSpawningActor() and BeginPlay

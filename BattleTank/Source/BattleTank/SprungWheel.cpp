@@ -27,7 +27,15 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 	
-
+	//see about error
+	if (GetAttachParentActor())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Not Null"));//with SpawnActorDeferred()and FinishSpawningActor()
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Null"));//SpawnActor()
+	}
 }
 
 // Called every frame
