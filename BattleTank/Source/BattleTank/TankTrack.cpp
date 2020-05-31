@@ -22,7 +22,7 @@ void UTankTrack::BeginPlay()
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {	// only get force when tracks on the ground
 	DriveTrack();
-	ApplySideWaysForce();
+	//ApplySideWaysForce();
 	CurrentThrottle = 0; // need to reset so stops applying
 
 }
@@ -52,7 +52,7 @@ void UTankTrack::DriveTrack()
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-	ApplyDownForce();
+	//ApplyDownForce();
 
 }
 
