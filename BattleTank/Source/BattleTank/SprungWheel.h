@@ -30,11 +30,11 @@ private:
 
 	//Components
 
-	UPROPERTY(EditDefaultsOnly, Category = "Components")
-	USphereComponent* Wheel = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* Wheel = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Components")
-	USphereComponent* Axle = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* Axle = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UPhysicsConstraintComponent* SpringConstraint = nullptr;
