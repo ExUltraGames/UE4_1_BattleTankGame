@@ -6,37 +6,54 @@
 // Sets default values
 ASprungWheel::ASprungWheel()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	SpringConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("SpringConstraint"));
-	SetRootComponent(SpringConstraint);
+	//TODO remove magic numbers - remove and go to BP
+	TankSpringConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("TankSpringConstraint"));
+	SetRootComponent(TankSpringConstraint);
+	TankSpringConstraint->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 2);
+	TankSpringConstraint->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 2);
+	TankSpringConstraint->SetLinearZLimit(ELinearConstraintMotion::LCM_Free, 0);
+	TankSpringConstraint->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 2);
+	TankSpringConstraint->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Locked, 2);
+	TankSpringConstraint->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 2);
+	TankSpringConstraint->SetLinearPositionDrive
+	(
+		false,
+		false,
+		true
+	);
+	TankSpringConstraint->SetLinearVelocityDrive
+	(
+		false,
+		false,
+		true
+	);
+	FVector TankPositionTarget = FVector(0, 0, 120);
+	TankSpringConstraint->SetLinearPositionTarget(TankPositionTarget);
+	FVector TankVelocityTarget = FVector(0, 0, 0);
+	TankSpringConstraint->SetLinearVelocityTarget(TankVelocityTarget);
+	TankSpringConstraint->SetLinearDriveParams(500, 100, 0);
 
-	Axle = CreateDefaultSubobject<UStaticMeshComponent>(FName("Axle"));
-	////Axle->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	Axle->SetupAttachment(SpringConstraint);
-	//Axle->SetMassOverrideInKg(NAME_None, 1000.0f);
-	//////Axle->SetNotifyRigidBodyCollision(false); // required for OnHit events
-	//Axle->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); 
-	//Axle->SetCollisionObjectType(ECC_WorldStatic);
-	//Axle->SetSimulatePhysics(true);
-	//auto Location = Axle->GetComponentLocation();
-	//UE_LOG(LogTemp, Warning, TEXT("Location of Axle: %s "), *Location.ToString());
-	//Location.Z = -120;
-	//Axle->SetRelativeLocation(Location);
-	//UE_LOG(LogTemp, Warning, TEXT("Location of Axle: %s "), *Location.ToString());
+
+	Axle = CreateDefaultSubobject<USphereComponent>(FName("Axle"));
+	Axle->SetupAttachment(TankSpringConstraint);
+
+	Wheel = CreateDefaultSubobject<USphereComponent>(FName("Wheel"));
+	Wheel->SetupAttachment(Axle);
 
 	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("AxleWheelConstraint"));
-	//AxleWheelConstraint->AttachToComponent(Axle, FAttachmentTransformRules::KeepWorldTransform);
 	AxleWheelConstraint->SetupAttachment(Axle);
-
-	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
-	////Wheel->AttachToComponent(Axle, FAttachmentTransformRules::KeepRelativeTransform);
-	Wheel->SetupAttachment(Axle); // want wheel and axle at same place
-	//Wheel->SetMassOverrideInKg(NAME_None, 1000.0f);
-	//Wheel->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	//Wheel->SetCollisionObjectType(ECC_WorldDynamic);
-	//Wheel->SetSimulatePhysics(true);
+	AxleWheelConstraint->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 2);
+	AxleWheelConstraint->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 2);
+	AxleWheelConstraint->SetLinearZLimit(ELinearConstraintMotion::LCM_Locked, 2);
+	AxleWheelConstraint->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 2);
+	AxleWheelConstraint->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 2);
+	AxleWheelConstraint->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 2);
+	AxleWheelConstraint->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Free, 0);
+	AxleWheelConstraint->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 2);
+	
 }
 
 // Called when the game starts or when spawned
@@ -53,9 +70,9 @@ void ASprungWheel::SetupConstraints()
 	if (!GetAttachParentActor()) { return; }
 	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
 	if (!BodyRoot) { return; }
-	UE_LOG(LogTemp, Warning, TEXT("Bodyroot is: %s"), *BodyRoot->GetName());
-	SpringConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Axle, NAME_None);
-	AxleWheelConstraint->SetConstrainedComponents(Axle, NAME_None, Wheel, NAME_None);// remember to change this
+	TankSpringConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Axle, NAME_None);
+
+	AxleWheelConstraint->SetConstrainedComponents(Axle, NAME_None, Wheel, NAME_None);
 }
 
 // Called every frame

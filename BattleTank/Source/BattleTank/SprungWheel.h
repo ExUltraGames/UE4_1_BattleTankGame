@@ -31,13 +31,13 @@ private:
 	//Components
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent* Wheel = nullptr;
+	USphereComponent* Wheel = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent* Axle = nullptr;
+	USphereComponent* Axle = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UPhysicsConstraintComponent* SpringConstraint = nullptr;
+	UPhysicsConstraintComponent* TankSpringConstraint = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UPhysicsConstraintComponent* AxleWheelConstraint = nullptr;

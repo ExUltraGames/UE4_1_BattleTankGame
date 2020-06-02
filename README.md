@@ -123,3 +123,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT83_UE4 296: Attaching Constraints in C++ (Adding Suspension) SetConstrainedComponents()
 * BT84_UE4 297: Chaining Physics Constraints (Wheels attached to spring) - BUG no details tab!
 * Bug sort - play and then reset to StaticMesh, restore point
+* Bug workaround using solely c++ (ignore previous restore) 297: Chaining Physics Constraints COMPLETE
