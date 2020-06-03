@@ -5,6 +5,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
+//Forward Declare
+class ASprungWheel; //IWYU in cpp
+
 /**
  * TankTrack is used to set maximum driving force, and to apply forces to the tank.
  */
@@ -25,20 +28,21 @@ public:
 private:
 	UTankTrack();
 
-	virtual void BeginPlay() override;
+	//virtual void BeginPlay() override;
 
 	//virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void ApplySideWaysForce();
+	//Get the Wheels = return a TArray of class pointers
+	TArray<ASprungWheel*> GetWheels() const; // how iterate over child components
 
-	void DriveTrack();
+	//void ApplySideWaysForce();
 
-	float CurrentThrottle = 0; // initialise
+	void DriveTrack(float CurrentThrottle);// remove as member variable and set as an argument for drive track
 
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+	//UFUNCTION()
+	//void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
-	void ApplyDownForce();
+	//void ApplyDownForce();
 
 	//UFUNCTION()
 	//void GetReversedHit(const FHitResult& Hit);

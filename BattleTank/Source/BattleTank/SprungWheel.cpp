@@ -39,9 +39,13 @@ ASprungWheel::ASprungWheel()
 
 	Axle = CreateDefaultSubobject<USphereComponent>(FName("Axle"));
 	Axle->SetupAttachment(TankSpringConstraint);
+	Axle->SetSimulatePhysics(true);
+	Axle->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
 	Wheel = CreateDefaultSubobject<USphereComponent>(FName("Wheel"));
 	Wheel->SetupAttachment(Axle);
+	Wheel->SetSimulatePhysics(true);
+	Wheel->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
 	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("AxleWheelConstraint"));
 	AxleWheelConstraint->SetupAttachment(Axle);
@@ -80,5 +84,11 @@ void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ASprungWheel::AddDrivingForce(float ForceMagnitude) // apply to each wheel
+{
+	//TODO only apply when on ground
+	Wheel->AddForce(Axle->GetForwardVector() * ForceMagnitude); //axle pointing in correct diection// needa a vector and then and * by force
 }
 
