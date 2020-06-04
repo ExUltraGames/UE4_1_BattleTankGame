@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/PrimitiveComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
 #include "PhysicsEngine/PhysicsConstraintComponent.h"
@@ -30,6 +31,11 @@ protected:
 private:
 	void SetupConstraints();
 
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	void ApplyForce();
+
 	//Components
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -43,5 +49,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UPhysicsConstraintComponent* AxleWheelConstraint = nullptr;
+
+	float TotalForceMagnitudeThisFrame = 0.f;
 
 };

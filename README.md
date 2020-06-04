@@ -124,4 +124,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT84_UE4 297: Chaining Physics Constraints (Wheels attached to spring) - BUG no details tab!
 * Bug sort - play and then reset to StaticMesh, restore point
 * Bug workaround using solely c++ (ignore previous restore) 297: Chaining Physics Constraints COMPLETE
-* BT84_UE4 298-302:Applying Wheel Driving Force (GetChildrenComponents(), Getters, Loops)
+* BT84_UE4 298-299:Applying Wheel Driving Force (GetChildrenComponents(), Getters, Loops)
+* BT85_UE4 300: Tick Groups AND Physics (apply force when on ground, OnHit)

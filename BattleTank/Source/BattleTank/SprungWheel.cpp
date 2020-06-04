@@ -8,6 +8,7 @@ ASprungWheel::ASprungWheel()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.TickGroup = TG_PostPhysics;
 
 	//TODO remove magic numbers - remove and go to BP
 	TankSpringConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("TankSpringConstraint"));
@@ -46,6 +47,7 @@ ASprungWheel::ASprungWheel()
 	Wheel->SetupAttachment(Axle);
 	Wheel->SetSimulatePhysics(true);
 	Wheel->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	Wheel->SetNotifyRigidBodyCollision(true); // needed for OnHit 
 
 	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("AxleWheelConstraint"));
 	AxleWheelConstraint->SetupAttachment(Axle);
@@ -64,9 +66,10 @@ ASprungWheel::ASprungWheel()
 void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
+	Wheel->OnComponentHit.AddDynamic(this, &ASprungWheel::OnHit);
 	SetupConstraints();
 }
+
 
 //instead of early returns in BeginPlay = cleaner, create a new function
 void ASprungWheel::SetupConstraints()
@@ -75,20 +78,34 @@ void ASprungWheel::SetupConstraints()
 	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
 	if (!BodyRoot) { return; }
 	TankSpringConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Axle, NAME_None);
-
 	AxleWheelConstraint->SetConstrainedComponents(Axle, NAME_None, Wheel, NAME_None);
 }
+
 
 // Called every frame
 void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (GetWorld()->TickGroup == TG_PostPhysics)//double check
+	{
+		TotalForceMagnitudeThisFrame = 0.f; // reset after force applied
+		//UE_LOG(LogTemp, Warning, TEXT("Tick %f"), GetWorld()->GetTimeSeconds());// want whn happening in frame
+	}
 }
 
 void ASprungWheel::AddDrivingForce(float ForceMagnitude) // apply to each wheel
 {
-	//TODO only apply when on ground
-	Wheel->AddForce(Axle->GetForwardVector() * ForceMagnitude); //axle pointing in correct diection// needa a vector and then and * by force
+	TotalForceMagnitudeThisFrame += ForceMagnitude;
 }
 
+void ASprungWheel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+	ApplyForce();
+	UE_LOG(LogTemp, Warning, TEXT("OnHit %f"), GetWorld()->GetTimeSeconds());// want whn happening in frame
+}
+
+void ASprungWheel::ApplyForce()
+{
+	Wheel->AddForce(Axle->GetForwardVector() * TotalForceMagnitudeThisFrame);
+}
