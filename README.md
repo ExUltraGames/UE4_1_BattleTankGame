@@ -126,3 +126,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * Bug workaround using solely c++ (ignore previous restore) 297: Chaining Physics Constraints COMPLETE
 * BT84_UE4 298-299:Applying Wheel Driving Force (GetChildrenComponents(), Getters, Loops)
 * BT85_UE4 300: Tick Groups AND Physics (apply force when on ground, OnHit)
+* BT85_UE4 301: Tweak Linear & Angluar Damping (Suspension)
