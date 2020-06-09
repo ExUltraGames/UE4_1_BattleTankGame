@@ -10,12 +10,75 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	//SetActorEnableCollision(true);
+
+	//this doesn't work as Cpp is compiled before the BP, no root component!
+	//TankComponent = FindComponentByClass<USceneComponent>();
+	//if (!TankComponent) { return; }
+	//Exhaust = CreateDefaultSubobject<UParticleSystemComponent>(FName("Exhaust"));
+	//Exhaust->SetupAttachment(RootComponent, TEXT("Exhaust"));
 }
 
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	CurrentHealth = StartingHealth;
+	InputBinding();
+}
+
+
+void ATank::InputBinding()
+{
+	InputComponentCameraBinding = FindComponentByClass<UInputComponent>();
+	
+	if (InputComponentCameraBinding)
+	{
+		InputComponentCameraBinding->BindAxis("AimAzimuth", this, &ATank::RotateCameraYaw);//axis value is speed
+		InputComponentCameraBinding->BindAxis("AimAltitude", this, &ATank::RotateCameraPitch);
+		//UE_LOG(LogTemp, Warning, TEXT("AimAzimuth Component found")); // to test
+	}
+}
+
+void ATank::RotateCameraYaw(float AxisValue)
+{
+	CameraInput.X = AxisValue; // value = speed and direction
+	AzimuthGimbal = FindComponentByClass<USceneComponent>()->GetChildComponent(1.f);
+	AzimuthGimbalBarrel = GetDefaultSubobjectByName(TEXT("Azimuth Gimbal Barrel"));
+
+	if (AzimuthGimbal)
+	{
+		FRotator NewRotation = AzimuthGimbal->GetComponentRotation();
+		//UE_LOG(LogTemp, Warning, TEXT("AimGimbal is: %s"), *AzimuthGimbal->GetName());
+		NewRotation.Yaw += CameraInput.X;
+		AzimuthGimbal->SetWorldRotation(NewRotation);
+	}
+	if (AzimuthGimbalBarrel)
+	{ 
+		FRotator NewRotation = Cast<USceneComponent>(AzimuthGimbalBarrel)->GetComponentRotation();
+		CameraInputClamped.X = FMath::Clamp(CameraInput.X, CameraBarrelClampMin, CameraBarrelClampMax); // slows mouse / barrel reaction in barrel view
+		NewRotation.Yaw = NewRotation.Yaw + CameraInputClamped.X;
+		Cast<USceneComponent>(AzimuthGimbalBarrel)->SetWorldRotation(NewRotation);
+	}
+}
+
+void ATank::RotateCameraPitch(float AxisValue)
+{
+	CameraInput.Y = AxisValue;
+	SpringArmPitch = GetDefaultSubobjectByName(TEXT("SpringArm"));
+	SpringArmPitchBarrel = GetDefaultSubobjectByName(TEXT("SpringArm Barrel"));
+
+	if (SpringArmPitch)
+	{
+		FRotator NewRotation = Cast<USceneComponent>(SpringArmPitch)->GetComponentRotation();
+		//UE_LOG(LogTemp, Warning, TEXT("SpringArm is: %s"), *SpringArmPitch->GetName());
+		NewRotation.Pitch = FMath::Clamp(NewRotation.Pitch + CameraInput.Y, CameraPitchMin, CameraPitchMax);
+		Cast<USceneComponent>(SpringArmPitch)->SetWorldRotation(NewRotation);
+	}
+	if (SpringArmPitchBarrel)
+	{
+		FRotator NewRotation = Cast<USceneComponent>(SpringArmPitchBarrel)->GetComponentRotation();
+		NewRotation.Pitch = FMath::Clamp(NewRotation.Pitch + CameraInput.Y, CameraPitchBarrelMin, CameraPitchBarrelMax);
+		Cast<USceneComponent>(SpringArmPitchBarrel)->SetWorldRotation(NewRotation);
+	}
 }
 
 float ATank::GetHealthPercent() const

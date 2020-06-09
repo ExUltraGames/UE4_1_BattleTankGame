@@ -51,6 +51,8 @@ private:
 
 	virtual void BeginPlay() override;
 
+	void InputBinding();
+
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 	void MoveBarrelTowards(FVector AimInDirection);
@@ -88,6 +90,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float BarrelMinElevationFront = -8.f;
 
-
+	UPROPERTY()
+	UInputComponent* InputComponent = nullptr;
 	
 };

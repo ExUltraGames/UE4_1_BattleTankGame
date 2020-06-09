@@ -51,6 +51,6 @@ void ATankAIController::Tick(float DeltaTime)
 	// if Locked fire // need state from aiming component // don't just make public = can make problems later
 	if (AimingComponent->GetFiringState() == EFiringState::Locked)
 	{
-		AimingComponent->Fire(); // TODO limit firing rate
+		AimingComponent->Fire();
 	}
 }

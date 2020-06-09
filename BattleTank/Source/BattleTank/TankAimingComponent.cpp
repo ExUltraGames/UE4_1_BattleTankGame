@@ -15,14 +15,28 @@ UTankAimingComponent::UTankAimingComponent()
 	//bWantsBeginPlay = true; // not needed in later versions // remove
 	PrimaryComponentTick.bCanEverTick = true;
 	//ProjectileBlueprint->ClassDefaultObject;
+
 }
 
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	//BIND fire actions // remove from BP
+	InputBinding();
+	
 	// So that first first is after initial reload
 	LastFireTime = FPlatformTime::Seconds();
-	
+}
+
+void UTankAimingComponent::InputBinding()
+{
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Fire Input Component found on: %s"), *GetOwner()->GetName()); // to test
+		InputComponent->BindAction("Fire", IE_Pressed, this, &UTankAimingComponent::Fire);
+	}
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)

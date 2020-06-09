@@ -102,7 +102,7 @@ void ASprungWheel::AddDrivingForce(float ForceMagnitude) // apply to each wheel
 void ASprungWheel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
 	ApplyForce();
-	UE_LOG(LogTemp, Warning, TEXT("OnHit %f"), GetWorld()->GetTimeSeconds());// want whn happening in frame
+	//UE_LOG(LogTemp, Warning, TEXT("OnHit %f"), GetWorld()->GetTimeSeconds());// want whn happening in frame
 }
 
 void ASprungWheel::ApplyForce()

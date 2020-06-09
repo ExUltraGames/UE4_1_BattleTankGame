@@ -37,7 +37,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 
-
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetPawn()) { return; } // e.g. if not possessing

@@ -2,11 +2,15 @@
 
 #pragma once
 
+#include "Components/InputComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/PrimitiveComponent.h"
-#include "GameFramework/Pawn.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Math/UnrealMathUtility.h"
+#include "UObject/Object.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Tank.generated.h" // Put new includes above
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
@@ -47,4 +51,54 @@ private:
 
 	//UFUNCTION()
 	//void GetReversedHit(const FHitResult& Hit);
+
+	void InputBinding();
+
+	UPROPERTY()
+	UInputComponent* InputComponentCameraBinding = nullptr;
+
+	UPROPERTY()
+	USceneComponent* AzimuthGimbal = nullptr;
+
+	UPROPERTY()
+	UObject* AzimuthGimbalBarrel = nullptr;
+
+	UPROPERTY()
+	UObject* SpringArmPitch = nullptr;
+
+	UPROPERTY()
+	UObject* SpringArmPitchBarrel = nullptr;
+
+	//UPROPERTY()
+	//UObject* SpringArmPitch = nullptr;
+
+	//UPROPERTY()
+	//UObject* SpringArmPitchBarrel = nullptr;
+
+	void RotateCameraYaw(float AxisValue);
+	void RotateCameraPitch(float AxisValue);
+
+	FVector2D CameraInput;
+	FVector2D CameraInputClamped;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float CameraPitchMax = -5.0f;
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float CameraPitchMin = -60.0f;
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float CameraPitchBarrelMax = 10.0f;
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float CameraPitchBarrelMin = -20.0f;
+	//adjusts speed relationship of barrel to mouse
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float CameraBarrelClampMax = 1.f;
+	//adjusts speed relationship of barrel to mouse
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float CameraBarrelClampMin = -1.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* Exhaust = nullptr;
+
+	UPROPERTY()
+	USceneComponent* TankComponent = nullptr;
 }; 
