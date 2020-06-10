@@ -27,6 +27,9 @@ AProjectile::AProjectile()
 
 	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force")); 
 	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);// attach necessary to function correctly as a child
+	
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("Impact SFX"));
+	AudioComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 // Called when the game starts or when spawned
@@ -40,6 +43,7 @@ void AProjectile::LaunchProjectile(float Speed)
 {
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();
+	WhistleActivate();
 }
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
@@ -47,6 +51,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+	ImpactBlastActivate();
 	
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
@@ -68,4 +73,19 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 void AProjectile::OnTimerExpire()
 {
 	Destroy();
+}
+
+void AProjectile::ImpactBlastActivate()
+{
+	AudioComponent->SetSound(ImpactBlastSFX);
+	AudioComponent->Play();
+
+
+}
+
+void AProjectile::WhistleActivate()
+{
+	AudioComponent->SetSound(WhistleSFX);
+	AudioComponent->Play();
+	AudioComponent->SetSound(LaunchBlastSFX);
 }

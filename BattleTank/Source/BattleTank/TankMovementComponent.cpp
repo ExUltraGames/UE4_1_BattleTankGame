@@ -22,7 +22,6 @@ void UTankMovementComponent::BeginPlay()
 	InputBinding();
 	FindExhaustParticleSystem();
 	FindAudioComponent();
-	//Tank Drive active under throw
 }
 
 void UTankMovementComponent::FindExhaustParticleSystem()
@@ -32,24 +31,25 @@ void UTankMovementComponent::FindExhaustParticleSystem()
 	ExhaustSmokeComponent->DeactivateSystem();
 }
 
+void UTankMovementComponent::FindAudioComponent()
+{
+	AudioComponent = GetOwner()->FindComponentByClass<UAudioComponent>();
+	if (!AudioComponent) { return;}
+	AudioComponent->Activate();
+}
+
 void UTankMovementComponent::InputBinding()
 {
 	InputComponentMovement = GetOwner()->FindComponentByClass<UInputComponent>();
 	if (!ensure(InputComponentMovement)) { return; }
 	if (InputComponentMovement)
 	{
-		InputComponentMovement->BindAxis("Move Forward", this, &UTankMovementComponent::IntendMoveForward);
-		InputComponentMovement->BindAxis("Turn Right", this, &UTankMovementComponent::IntendTurnRight);
+		InputComponentMovement->BindAxis("Move Forward", this, &UTankMovementComponent::IntendDrive);
+		InputComponentMovement->BindAxis("Turn Right", this, &UTankMovementComponent::IntendTurn);
 		//UE_LOG(LogTemp, Warning, TEXT("Input Component: %s"), *InputComponentMovement->GetFName().ToString()); // to test
+		InputComponentMovement->BindAction("DriveSound", IE_Pressed, this, &UTankMovementComponent::TankDriveSoundActivate);
+		InputComponentMovement->BindAction("DriveSound", IE_Released, this, &UTankMovementComponent::TankIdleSoundActivate);
 	}
-}
-
-void UTankMovementComponent::FindAudioComponent()
-{
-	AudioComponent = GetOwner()->FindComponentByClass<UAudioComponent>();
-	UE_LOG(LogTemp, Warning, TEXT("%s  Audio Component"), *AudioComponent->GetName());
-	if (!AudioComponent) { return;}
-	AudioComponent->Activate();
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
@@ -64,6 +64,24 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
 	IntendTurnRight(RightThrow);
+
+	TankDriveSounds();
+	
+	//TODO adjust attenuation of sound
+}
+
+void UTankMovementComponent::IntendDrive(float Throw)
+{
+	IntendMoveForward(Throw);
+	ExhaustActivate();
+	//TankDriveSounds(); doesn't work for non-ai tank // use key binding???? // order of compile??
+}
+
+void UTankMovementComponent::IntendTurn(float Throw)
+{
+	IntendTurnRight(Throw);
+	ExhaustActivate();
+	//TankDriveSounds();
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)//float throw -1 to +1 comes from the BindAxis
@@ -71,8 +89,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)//float throw -1 to +
 	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-	ExhaustActivate(Throw);
-	//TankDriveSoundActivate(Throw);
+	Drive = Throw;
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
@@ -80,16 +97,16 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
+	ExhaustActivate();
+	Turn = Throw;
 }
 
-void UTankMovementComponent::ExhaustActivate(float Throw)
+void UTankMovementComponent::ExhaustActivate()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Throw: %f"), Throw);
-	if (!ExhaustSmokeComponent) { return; }// needed to protect
-	if (Throw != 0)
+	if (!ExhaustSmokeComponent) { return; }
+	if (Drive != 0 || Turn != 0)
 	{
 		ExhaustSmokeComponent->Activate();
-		//UE_LOG(LogTemp, Warning, TEXT("Exhaust START"));
 	}
 	else
 	{
@@ -97,31 +114,33 @@ void UTankMovementComponent::ExhaustActivate(float Throw)
 	}
 }
 
-void UTankMovementComponent::TankIdleSoundActivate()
+void UTankMovementComponent::TankDriveSounds()
 {
-	bTankDriveSound = false;
-	if (!AudioComponent) { return; }
-	if (!bTankIdleSound)
+	if (Drive != 0 || Turn != 0)
 	{
+		AudioComponent->Stop();
+		AudioComponent->SetSound(AudioDrive);
 		AudioComponent->Play();
-		bTankIdleSound = true;
-	}
-}
-
-void UTankMovementComponent::TankDriveSoundActivate(float Throw)
-{
-	bTankDriveSound = false;
-	if (!AudioComponent) { return; }
-	if (!bTankDriveSound && Throw !=0)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("DRIVE"));
-		AudioComponent->Play(); // play DRIVE here
-		bTankDriveSound = true;
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("IDLE"));
-		//AudioComponent->Play(); // Play DRIVE here
-		bTankDriveSound = false;
+		AudioComponent->Stop();
+		AudioComponent->SetSound(AudioIdle);
+		AudioComponent->Play();
 	}
+}
+
+void UTankMovementComponent::TankDriveSoundActivate()
+{
+	if (!AudioComponent) { return; }
+	AudioComponent->Stop();
+	AudioComponent->SetSound(AudioDrive);
+	AudioComponent->Play();
+}
+void UTankMovementComponent::TankIdleSoundActivate()
+{
+	if (!AudioComponent) { return; }
+	AudioComponent->Stop();
+	AudioComponent->SetSound(AudioIdle);
+	AudioComponent->Play();
 }

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Components/AudioComponent.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
@@ -10,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Sound/SoundBase.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -40,6 +42,9 @@ private:
 	UParticleSystemComponent* ImpactBlast = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UAudioComponent* AudioComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
 	URadialForceComponent* ExplosionForce = nullptr; // 	#include "PhysicsEngine/RadialForceComponent.h"
 
 	UFUNCTION()
@@ -47,9 +52,21 @@ private:
 	
 	void OnTimerExpire();
 
+
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float DestroyDelay = 5.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float ProjectileDamage = 20.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* ImpactBlastSFX = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* LaunchBlastSFX = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* WhistleSFX = nullptr;
+
+
+	void ImpactBlastActivate();
+	void WhistleActivate();
 };

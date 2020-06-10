@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/NavMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Sound/SoundBase.h"
 #include "TankMovementComponent.generated.h"
 
 class UTankTrack;
@@ -25,6 +26,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendMoveForward(float Throw);
 
+	void IntendDrive(float Throw);
+	void IntendTurn(float Throw);
+
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendTurnRight(float Throw);
 
@@ -39,8 +43,7 @@ private:
 
 	void InputBinding();
 	void FindExhaustParticleSystem();
-	void ExhaustActivate(float Throw);
-
+	void ExhaustActivate();
 
 	UPROPERTY()
 	UInputComponent* InputComponentMovement = nullptr;
@@ -48,10 +51,15 @@ private:
 	UParticleSystemComponent* ExhaustSmokeComponent = nullptr;//IWYU
 	UPROPERTY()
 	UAudioComponent* AudioComponent = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* AudioIdle = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* AudioDrive = nullptr;
 
 	void FindAudioComponent();
 	void TankIdleSoundActivate();
-	void TankDriveSoundActivate(float Throw);
-	bool bTankIdleSound = true;
-	bool bTankDriveSound = true;
+	void TankDriveSoundActivate();
+	void TankDriveSounds();
+	float Drive;
+	float Turn;
 };
