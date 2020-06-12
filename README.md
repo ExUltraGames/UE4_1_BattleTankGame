@@ -130,4 +130,5 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * Moved Inputs / Bindings to CPP from BP (movement, fire, camera); added Exhaust smoke on Drive, prep for audio
 * added SFX to tank movement and projectile
 * completed SFX to projectile
-* completed SFX to barrel and turret
+* completed SFX to barrel and turret, inc. added projectile smoke to projectile
+* Refactor of SFX code in movementcomponent and tweak to barrel and turret

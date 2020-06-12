@@ -27,9 +27,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float MaxElevationDegrees = 40;
 
-	//UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	//float MinElevationDegrees = 0;
-
 	UPROPERTY(VisibleAnywhere, Category = "Sound")
 	UAudioComponent* BarrelAudioComponent = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")

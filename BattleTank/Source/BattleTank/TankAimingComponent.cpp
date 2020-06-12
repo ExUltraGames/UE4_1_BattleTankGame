@@ -15,6 +15,8 @@ UTankAimingComponent::UTankAimingComponent()
 	//bWantsBeginPlay = true; // not needed in later versions // remove
 	PrimaryComponentTick.bCanEverTick = true;
 	//ProjectileBlueprint->ClassDefaultObject;
+	ReloadAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("Reload"));
+	ReloadAudioComponent->bAutoActivate = false;
 
 }
 
@@ -47,6 +49,12 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
+	FiringStateUI();
+	ReloadSound();
+}
+
+void UTankAimingComponent::FiringStateUI()
+{
 	if (RoundsLeft <= 0) // ensure even if go -ve for any reason
 	{
 		FiringState = EFiringState::OutofAmmo;
@@ -64,6 +72,19 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 		FiringState = EFiringState::Locked;
 	}
 }
+
+void UTankAimingComponent::ReloadSound()
+{
+	if (ReloadAudioComponent && ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds))
+	{
+		ReloadAudioComponent->Activate();
+	}
+	else
+	{
+		ReloadAudioComponent->Deactivate();
+	}
+}
+
 
 int32 UTankAimingComponent::GetRoundsLeft() const
 {

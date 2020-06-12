@@ -55,6 +55,8 @@ private:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
+	void FiringStateUI();
+
 	void MoveBarrelTowards(FVector AimInDirection);
 
 	bool IsBarrelMoving();
@@ -92,5 +94,11 @@ private:
 
 	UPROPERTY()
 	UInputComponent* InputComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* ReloadAudioComponent = nullptr;
+	
+	void ReloadSound();
+	bool bReloadState = true;
 	
 };

@@ -49,14 +49,15 @@ private:
 	UInputComponent* InputComponentMovement = nullptr;
 	UPROPERTY()
 	UParticleSystemComponent* ExhaustSmokeComponent = nullptr;//IWYU
-	UPROPERTY()
-	UAudioComponent* AudioComponent = nullptr;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* AudioIdle = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* AudioDrive = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* MovementAudioComponent = nullptr;
 
-	void FindAudioComponent();
 	void TankIdleSoundActivate();
 	void TankDriveSoundActivate();
 	void TankDriveSounds();

@@ -5,7 +5,7 @@
 
 UTankTurret::UTankTurret()
 {
-	TurretAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("Barrel"));
+	TurretAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("Turret"));
 	TurretAudioComponent->bAutoActivate = false;
 }
 
@@ -20,7 +20,7 @@ void UTankTurret::RotateT(float RelativeSpeed)
 	}
 	else
 	{
-		TurretAudioComponent->Deactivate();
+		TurretAudioComponent->Deactivate(); 
 	}
 
 	auto RotationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;

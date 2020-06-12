@@ -6,7 +6,8 @@
 
 UTankMovementComponent::UTankMovementComponent()
 {
-
+	MovementAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("Movement"));
+	MovementAudioComponent->bAutoActivate = true;
 }
 
 void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
@@ -21,21 +22,6 @@ void UTankMovementComponent::BeginPlay()
 	Super::BeginPlay();
 	InputBinding();
 	FindExhaustParticleSystem();
-	FindAudioComponent();
-}
-
-void UTankMovementComponent::FindExhaustParticleSystem()
-{
-	ExhaustSmokeComponent = GetOwner()->FindComponentByClass<UParticleSystemComponent>();// IWYU!!!!
-	if (!ensure(ExhaustSmokeComponent)) { return; }
-	ExhaustSmokeComponent->DeactivateSystem();
-}
-
-void UTankMovementComponent::FindAudioComponent()
-{
-	AudioComponent = GetOwner()->FindComponentByClass<UAudioComponent>();
-	if (!AudioComponent) { return;}
-	AudioComponent->Activate();
 }
 
 void UTankMovementComponent::InputBinding()
@@ -51,6 +37,13 @@ void UTankMovementComponent::InputBinding()
 		InputComponentMovement->BindAction("DriveSound", IE_Released, this, &UTankMovementComponent::TankIdleSoundActivate);
 	}
 }
+void UTankMovementComponent::FindExhaustParticleSystem()
+{
+	ExhaustSmokeComponent = GetOwner()->FindComponentByClass<UParticleSystemComponent>();// IWYU!!!!
+	if (!ensure(ExhaustSmokeComponent)) { return; }
+	ExhaustSmokeComponent->DeactivateSystem();
+}
+
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
@@ -113,31 +106,32 @@ void UTankMovementComponent::ExhaustActivate()
 
 void UTankMovementComponent::TankDriveSounds()
 {
+	if (!MovementAudioComponent) { return; }
 	if (Drive != 0 || Turn != 0)
 	{
-		AudioComponent->Stop();
-		AudioComponent->SetSound(AudioDrive);
-		AudioComponent->Play();
+		MovementAudioComponent->Stop();
+		MovementAudioComponent->SetSound(AudioDrive);
+		MovementAudioComponent->Play();
 	}
 	else
 	{
-		AudioComponent->Stop();
-		AudioComponent->SetSound(AudioIdle);
-		AudioComponent->Play();
+		MovementAudioComponent->Stop();
+		MovementAudioComponent->SetSound(AudioIdle);
+		MovementAudioComponent->Play();
 	}
 }
 
 void UTankMovementComponent::TankDriveSoundActivate()
 {
-	if (!AudioComponent) { return; }
-	AudioComponent->Stop();
-	AudioComponent->SetSound(AudioDrive);
-	AudioComponent->Play();
+	if (!MovementAudioComponent) { return; }
+	MovementAudioComponent->Stop();
+	MovementAudioComponent->SetSound(AudioDrive);
+	MovementAudioComponent->Play();
 }
 void UTankMovementComponent::TankIdleSoundActivate()
 {
-	if (!AudioComponent) { return; }
-	AudioComponent->Stop();
-	AudioComponent->SetSound(AudioIdle);
-	AudioComponent->Play();
+	if (!MovementAudioComponent) { return; }
+	MovementAudioComponent->Stop();
+	MovementAudioComponent->SetSound(AudioIdle);
+	MovementAudioComponent->Play();
 }
