@@ -129,3 +129,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * BT85_UE4 301: Tweak Linear & Angluar Damping (Suspension)
 * Moved Inputs / Bindings to CPP from BP (movement, fire, camera); added Exhaust smoke on Drive, prep for audio
 * added SFX to tank movement and projectile
+* completed SFX to projectile
