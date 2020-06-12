@@ -32,7 +32,7 @@ void ATank::InputBinding()
 	
 	if (InputComponentCameraBinding)
 	{
-		InputComponentCameraBinding->BindAxis("AimAzimuth", this, &ATank::RotateCameraYaw);//axis value is speed
+		InputComponentCameraBinding->BindAxis("AimAzimuth", this, &ATank::RotateCameraYaw);//out float AxisValue =  speed & direction
 		InputComponentCameraBinding->BindAxis("AimAltitude", this, &ATank::RotateCameraPitch);
 		//UE_LOG(LogTemp, Warning, TEXT("AimAzimuth Component found")); // to test
 	}

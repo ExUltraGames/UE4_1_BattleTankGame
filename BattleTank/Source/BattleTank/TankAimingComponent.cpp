@@ -139,7 +139,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimInDirection)
 		Turret->RotateT(-DeltaRotator.Yaw);
 	}
 
-	//TODO if Turret RelativeRotation.Yaw is -12 to 12 degress set Barrel MinElevationDegrees = -10
 }
 
 void UTankAimingComponent::Fire()
@@ -160,7 +159,6 @@ void UTankAimingComponent::Fire()
 			Barrel->GetSocketRotation(FName("Projectile"))
 			//NewParams
 			);
-
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 		RoundsLeft--;

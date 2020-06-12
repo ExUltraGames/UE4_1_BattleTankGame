@@ -87,7 +87,7 @@ void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (GetWorld()->TickGroup == TG_PostPhysics)//double check
+	if (GetWorld()->TickGroup == TG_PostPhysics)//double check // change when physics appplied in frame
 	{
 		TotalForceMagnitudeThisFrame = 0.f; // reset after force applied
 		//UE_LOG(LogTemp, Warning, TEXT("Tick %f"), GetWorld()->GetTimeSeconds());// want whn happening in frame

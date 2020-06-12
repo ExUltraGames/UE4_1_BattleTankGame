@@ -43,7 +43,13 @@ void AProjectile::LaunchProjectile(float Speed)
 {
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();
-	WhistleActivate();
+	LaunchBlastActivate();
+	if (bLaunch && !bWhistle)
+	{
+		FTimerHandle Delay;
+		GetWorld()->GetTimerManager().SetTimer(Delay, this, &AProjectile::WhistleActivate, WhistleDelay, false);
+		bLaunch = false;
+	}
 }
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
@@ -51,6 +57,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+	bWhistle = true;
 	ImpactBlastActivate();
 	
 	SetRootComponent(ImpactBlast);
@@ -79,13 +86,21 @@ void AProjectile::ImpactBlastActivate()
 {
 	AudioComponent->SetSound(ImpactBlastSFX);
 	AudioComponent->Play();
+}
 
-
+void AProjectile::LaunchBlastActivate()
+{
+	AudioComponent->SetSound(LaunchBlastSFX);
+	AudioComponent->Play();
+	bLaunch = true;
 }
 
 void AProjectile::WhistleActivate()
 {
-	AudioComponent->SetSound(WhistleSFX);
-	AudioComponent->Play();
-	AudioComponent->SetSound(LaunchBlastSFX);
+	if(!bWhistle) 
+	{
+		AudioComponent->SetSound(WhistleSFX);
+		AudioComponent->Play();
+	}
+	bWhistle = false;
 }

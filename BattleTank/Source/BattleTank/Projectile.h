@@ -12,6 +12,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 #include "Sound/SoundBase.h"
+#include "TimerManager.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -53,10 +54,10 @@ private:
 	void OnTimerExpire();
 
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float DestroyDelay = 5.f;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float ProjectileDamage = 20.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
@@ -65,8 +66,11 @@ private:
 	USoundBase* LaunchBlastSFX = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* WhistleSFX = nullptr;
-
-
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	float WhistleDelay = 5.f;
 	void ImpactBlastActivate();
+	void LaunchBlastActivate();
 	void WhistleActivate();
+	bool bLaunch = false;
+	bool bWhistle = false;
 };

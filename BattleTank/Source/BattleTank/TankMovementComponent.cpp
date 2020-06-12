@@ -66,22 +66,20 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	IntendTurnRight(RightThrow);
 
 	TankDriveSounds();
-	
-	//TODO adjust attenuation of sound
 }
 
 void UTankMovementComponent::IntendDrive(float Throw)
 {
 	IntendMoveForward(Throw);
 	ExhaustActivate();
-	//TankDriveSounds(); doesn't work for non-ai tank // use key binding???? // order of compile??
+	//TankDriveSounds(); //doesn't work for non-ai tank // use key binding???? // order of compile??
 }
 
 void UTankMovementComponent::IntendTurn(float Throw)
 {
 	IntendTurnRight(Throw);
 	ExhaustActivate();
-	//TankDriveSounds();
+	//TankDriveSounds(); //doesn't work for non-ai tank // use key binding???? // order of compile??
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)//float throw -1 to +1 comes from the BindAxis
@@ -97,7 +95,6 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
-	ExhaustActivate();
 	Turn = Throw;
 }
 
