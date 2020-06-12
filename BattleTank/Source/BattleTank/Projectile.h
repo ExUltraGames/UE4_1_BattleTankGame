@@ -40,6 +40,9 @@ private:
 	UParticleSystemComponent* LaunchBlast = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
+	URadialForceComponent* LaunchBlastForce = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UParticleSystemComponent* ImpactBlast = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")

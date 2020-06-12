@@ -18,6 +18,9 @@ AProjectile::AProjectile()
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
+	LaunchBlastForce = CreateDefaultSubobject<URadialForceComponent>(FName("Launch Blast Force"));
+	LaunchBlastForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovement->bAutoActivate = false;
 
@@ -26,7 +29,7 @@ AProjectile::AProjectile()
 	ImpactBlast->bAutoActivate = false; // don't want activated at start
 
 	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force")); 
-	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);// attach necessary to function correctly as a child
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("Impact SFX"));
 	AudioComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
@@ -41,8 +44,11 @@ void AProjectile::BeginPlay()
 
 void AProjectile::LaunchProjectile(float Speed)
 {
+
+	//TODO put a delay before fire and a "fire shout" sound effect
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();
+	LaunchBlastForce->FireImpulse();
 	LaunchBlastActivate();
 	if (bLaunch && !bWhistle)
 	{
@@ -50,6 +56,8 @@ void AProjectile::LaunchProjectile(float Speed)
 		GetWorld()->GetTimerManager().SetTimer(Delay, this, &AProjectile::WhistleActivate, WhistleDelay, false);
 		bLaunch = false;
 	}
+
+	//TODO add LaunchBlast Impulse
 }
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
@@ -57,8 +65,8 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
-	bWhistle = true;
 	ImpactBlastActivate();
+	bWhistle = true;
 	
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
