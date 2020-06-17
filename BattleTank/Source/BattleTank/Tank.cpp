@@ -30,20 +30,18 @@ ATank::ATank()
 	TankBarrel = CreateDefaultSubobject<UTankBarrel>(FName("TankBarrel"));
 	TankBarrel->SetupAttachment(TankTurret, FName("Barrel"));
 
-	TurretAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TurretAudioComponent"));
-	TurretAudioComponent->SetupAttachment(TankTurret);
-	BarrelAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("BarrelAudioComponent"));
-	BarrelAudioComponent->SetupAttachment(TankBarrel);
-
 	TankMovement = CreateDefaultSubobject<UTankMovementComponent>(FName("TankMovement"));
 	TankMovementAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankMovementAudioComponent"));
 	TankMovementAudioComponent->bAutoActivate = true;
 	
 	TankAiming = CreateDefaultSubobject<UTankAimingComponent>(FName("TankAiming"));
-	TankAimingAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankAimingAudioComponent"));
-	TankAimingAudioComponent->bAutoActivate = true;
 	TankReloadAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankReloadAudioComponent"));
 	TankReloadAudioComponent->bAutoActivate = true;
+	TankAimingAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankAimingAudioComponent"));
+	TankAimingAudioComponent->bAutoActivate = false;
+	TankTurretAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankTurretAudioComponent"));
+	TankTurretAudioComponent->bAutoActivate = false;
+	
 
 	//this doesn't work as Cpp is compiled before the BP, no root component!
 	//TankComponent = FindComponentByClass<USceneComponent>();

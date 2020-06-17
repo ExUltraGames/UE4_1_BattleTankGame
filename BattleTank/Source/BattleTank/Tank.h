@@ -57,10 +57,14 @@ public:
 	UAudioComponent* TankMovementAudioComponent = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Sound")
-	UAudioComponent* TankAimingAudioComponent = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Sound")
 	UAudioComponent* TankReloadAudioComponent = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* TankAimingAudioComponent = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* TankTurretAudioComponent = nullptr;
+
 protected:
 
 

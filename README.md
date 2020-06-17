@@ -134,3 +134,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * Refactor of SFX code in movementcomponent and tweak to barrel and turret
 * Tank ReBuild and Refactor of Audio code and components
 * Refactor Movement sounds complete
+* Refactor Barrel, Turret and ALL sounds complete

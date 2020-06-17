@@ -27,13 +27,15 @@ public:
 	void IntendMoveForward(float Throw);
 
 	void IntendDrive(float Throw);
+	
 	void IntendTurn(float Throw);
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendTurnRight(float Throw);
+private:
 
 	virtual void BeginPlay() override;
-private:
+	
 	// Called from the pathfinding logic by the AI controllers
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
@@ -43,6 +45,7 @@ private:
 	void InputBinding();
 	void FindExhaustParticleSystem();
 	void ExhaustActivate();
+	void FindMovementAudioComponent();
 
 	UPROPERTY()
 	UInputComponent* InputComponentMovement = nullptr;
@@ -51,6 +54,7 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* AudioIdle = nullptr;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* AudioDrive = nullptr;
 	

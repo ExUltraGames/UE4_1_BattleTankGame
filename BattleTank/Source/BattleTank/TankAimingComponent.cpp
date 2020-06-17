@@ -19,29 +19,13 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//BIND fire actions // remove from BP
 	InputBinding();
-	//Find ReloadAudioComponent
-	ReloadAudioComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankReloadAudioComponent")));
-	if (!ReloadAudioComponent) { return; }
-	if (ReloadAudioComponent)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("ReloadAudioComponent: %s"), *ReloadAudioComponent->GetName());
-		//ReloadSound();
-	}
+	FindReloadAudioComponent();
+	FindBarrelAudioComponent();
+	FindTurretAudioComponent();
 
 	// So that first first is after initial reload
 	LastFireTime = FPlatformTime::Seconds();
-
-	//Find AudioBarrelComponent
-	AudioBarrelComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankAimingAudioComponent")));
-	if (!AudioBarrelComponent) { return; }
-	if (AudioBarrelComponent)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AudioBarrelComponent: %s"), *AudioBarrelComponent->GetName());
-		//AudioBarrelComponent->Activate();
-		//AudioBarrelComponent->SetSound(AudioBarrel);
-	}
 }
 
 void UTankAimingComponent::InputBinding()
@@ -52,6 +36,27 @@ void UTankAimingComponent::InputBinding()
 		//UE_LOG(LogTemp, Warning, TEXT("Fire Input Component found on: %s"), *GetOwner()->GetName()); // to test
 		InputComponent->BindAction("Fire", IE_Pressed, this, &UTankAimingComponent::Fire);
 	}
+}
+
+void UTankAimingComponent::FindReloadAudioComponent()
+{
+	ReloadAudioComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankReloadAudioComponent")));
+	if (!ReloadAudioComponent) { return; }
+	ReloadSound();
+}
+
+void UTankAimingComponent::FindBarrelAudioComponent()
+{
+	AudioBarrelComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankAimingAudioComponent")));
+	if (!AudioBarrelComponent) { return; }
+	//UE_LOG(LogTemp, Warning, TEXT("AudioBarrelComponent: %s"), *AudioBarrelComponent->GetName());
+}
+
+void UTankAimingComponent::FindTurretAudioComponent()
+{
+	AudioTurretComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankTurretAudioComponent")));
+	if (!AudioTurretComponent) { return; }
+	//UE_LOG(LogTemp, Warning, TEXT("AudioTurretComponent: %s"), *AudioTurretComponent->GetName());
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
@@ -85,7 +90,6 @@ void UTankAimingComponent::FiringStateUI()
 	}
 }
 
-
 int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return RoundsLeft;
@@ -96,7 +100,6 @@ EFiringState UTankAimingComponent::GetFiringState() const // const so can't chan
 {
 	return FiringState;
 }
-
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
@@ -129,12 +132,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 		BarrelSoundStart(RelativeBarrelSpeed);
+		TurretSoundStart(RelativeTurretSpeed);
 	}
 	// If no solution found do nothing // 
-	if (!bHaveAimSolution)
-	{
-		BarrelSoundStop();
-	}
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimInDirection)
@@ -197,25 +197,38 @@ void UTankAimingComponent::ReloadSound()
 {
 	if (ReloadAudioComponent)
 	{
-		ReloadAudioComponent->SetSound(AudioReload);
-		ReloadAudioComponent->Play();
-		
+		ReloadAudioComponent->Activate();
 	}
 }
 
 void UTankAimingComponent::BarrelSoundStart(float RelativeSpeed)
 {
-	if (AudioBarrelComponent && (RelativeSpeed >= MinMaxElevateSound || RelativeSpeed <= -MinMaxElevateSound))
+	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
+	if (!AudioBarrelComponent) { return; }
+	if (RelativeSpeed >= MinMaxElevateSound || RelativeSpeed <= -MinMaxElevateSound)
 	{
-		AudioBarrelComponent->Play();
+		AudioBarrelComponent->Activate();
 		//UE_LOG(LogTemp, Warning, TEXT("AudioBarrelComponent: %s"), *AudioBarrelComponent->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("RelativeSpeed: %f"), RelativeSpeed);
+	}
+	else
+	{
+		AudioBarrelComponent->Deactivate();
 	}
 }
 
-void UTankAimingComponent::BarrelSoundStop()
+void UTankAimingComponent::TurretSoundStart(float RelativeSpeed)
 {
-	if (!AudioBarrelComponent) { return; }
-	AudioBarrelComponent->Stop();
+	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
+	if (!AudioTurretComponent) { return; }
+	if (RelativeSpeed >= MinMaxTurretSound || RelativeSpeed <= -MinMaxTurretSound)
+	{
+		AudioTurretComponent->Activate();
+		//UE_LOG(LogTemp, Warning, TEXT("RelativeTurretSpeed: %f"), RelativeSpeed);
+	}
+	else
+	{
+		AudioTurretComponent->Deactivate();
+	}
 }
-
 

@@ -18,13 +18,7 @@ void UTankMovementComponent::BeginPlay()
 	InputBinding();
 	FindExhaustParticleSystem();
 	//Find MovementAudioComponent
-	MovementAudioComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankMovementAudioComponent")));
-	if (MovementAudioComponent)
-	{
-		MovementAudioComponent->Activate();
-		//UE_LOG(LogTemp, Warning, TEXT("MovementAudioComponent: %s"), *MovementAudioComponent->GetName());
-		TankIdleSoundActivate();
-	}
+	FindMovementAudioComponent();
 }
 
 void UTankMovementComponent::InputBinding()
@@ -47,6 +41,16 @@ void UTankMovementComponent::FindExhaustParticleSystem()
 	ExhaustSmokeComponent->DeactivateSystem();
 }
 
+void UTankMovementComponent::FindMovementAudioComponent()
+{
+	MovementAudioComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankMovementAudioComponent")));
+	if (MovementAudioComponent)
+	{
+		MovementAudioComponent->Activate();
+		//UE_LOG(LogTemp, Warning, TEXT("MovementAudioComponent: %s"), *MovementAudioComponent->GetName());
+		TankIdleSoundActivate();
+	}
+}
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {

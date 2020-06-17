@@ -51,15 +51,23 @@ protected:
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
+
+	void ReloadSound();
 	
 	void BarrelSoundStart(float RelativeSpeed);
 
-	void BarrelSoundStop();
+	void TurretSoundStart(float RelativeSpeed);
 
 	float RelativeBarrelSpeed;
 	float RelativeTurretSpeed;
 
 	virtual void BeginPlay() override;
+
+	void FindBarrelAudioComponent();
+
+	void FindReloadAudioComponent();
+
+	void FindTurretAudioComponent();
 
 	void InputBinding();
 
@@ -105,23 +113,19 @@ private:
 	UPROPERTY()
 	UInputComponent* InputComponent = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UPROPERTY()
 	UAudioComponent* ReloadAudioComponent = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
-	USoundBase* AudioReload = nullptr;
-
-	void ReloadSound();
-
-	bool bReloadState = false;
+	float MinMaxElevateSound = 0.6f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
-	float MinMaxElevateSound = 0.3f;
+	float MinMaxTurretSound = 0.2f;
 
-	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UPROPERTY()
 	UAudioComponent* AudioBarrelComponent = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Sound")
-	USoundBase* AudioBarrel = nullptr;
+	UPROPERTY()
+	UAudioComponent* AudioTurretComponent = nullptr;
 	
 };

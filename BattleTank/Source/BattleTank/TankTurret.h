@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Components/StaticMeshComponent.h"
-#include "Sound/SoundBase.h"
 #include "TankTurret.generated.h"
 
 /**
@@ -19,15 +18,10 @@ public:
 	// -1 is max downward speed, and +1 is max up movement
 	void RotateT(float RelativeSpeed);
 
-	UPROPERTY(EditDefaultsOnly, Category = "Sound")
-	USoundBase* AudioTurret = nullptr;
-	
-protected:
-
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float MaxDegreesPerSecond = 25;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Sound")
-	float MinMaxTurnSound = 0.3f;
+	//UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	//float MinMaxTurnSound = 0.3f;
 };
