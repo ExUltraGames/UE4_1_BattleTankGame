@@ -3,7 +3,9 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
+#include "Components/AudioComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundBase.h"
 #include "TankAimingComponent.generated.h"
 
 // Enum for aiming state
@@ -41,6 +43,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int32 GetRoundsLeft() const;
 
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
@@ -48,6 +51,13 @@ protected:
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
+	
+	void BarrelSoundStart(float RelativeSpeed);
+
+	void BarrelSoundStop();
+
+	float RelativeBarrelSpeed;
+	float RelativeTurretSpeed;
 
 	virtual void BeginPlay() override;
 
@@ -71,7 +81,7 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 0.1;
+	float ReloadTimeInSeconds = 1;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	int32 RoundsLeft = 20;
@@ -97,8 +107,21 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Sound")
 	UAudioComponent* ReloadAudioComponent = nullptr;
-	
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* AudioReload = nullptr;
+
 	void ReloadSound();
-	bool bReloadState = true;
+
+	bool bReloadState = false;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	float MinMaxElevateSound = 0.3f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* AudioBarrelComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* AudioBarrel = nullptr;
 	
 };

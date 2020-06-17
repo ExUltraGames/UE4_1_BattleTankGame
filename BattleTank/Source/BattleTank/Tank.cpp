@@ -1,6 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "TankBarrel.h"
+#include "TankTurret.h"
+#include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Tank.h"
 
 
@@ -10,6 +14,36 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	//SetActorEnableCollision(true);
+
+	Tank = CreateDefaultSubobject<UStaticMeshComponent>(FName("Tank"));
+	SetRootComponent(Tank);
+	//set physics and collision defaults
+	Tank->SetNotifyRigidBodyCollision(true);
+	Tank->SetSimulatePhysics(true);
+	Tank->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	Tank->SetCollisionObjectType(ECollisionChannel::ECC_PhysicsBody);
+	Tank->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
+
+	TankTurret = CreateDefaultSubobject<UTankTurret>(FName("TankTurret"));
+	TankTurret->SetupAttachment(Tank, FName("Turret"));
+
+	TankBarrel = CreateDefaultSubobject<UTankBarrel>(FName("TankBarrel"));
+	TankBarrel->SetupAttachment(TankTurret, FName("Barrel"));
+
+	TurretAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TurretAudioComponent"));
+	TurretAudioComponent->SetupAttachment(TankTurret);
+	BarrelAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("BarrelAudioComponent"));
+	BarrelAudioComponent->SetupAttachment(TankBarrel);
+
+	TankMovement = CreateDefaultSubobject<UTankMovementComponent>(FName("TankMovement"));
+	TankMovementAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankMovementAudioComponent"));
+	TankMovementAudioComponent->bAutoActivate = true;
+	
+	TankAiming = CreateDefaultSubobject<UTankAimingComponent>(FName("TankAiming"));
+	TankAimingAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankAimingAudioComponent"));
+	TankAimingAudioComponent->bAutoActivate = true;
+	TankReloadAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankReloadAudioComponent"));
+	TankReloadAudioComponent->bAutoActivate = true;
 
 	//this doesn't work as Cpp is compiled before the BP, no root component!
 	//TankComponent = FindComponentByClass<USceneComponent>();

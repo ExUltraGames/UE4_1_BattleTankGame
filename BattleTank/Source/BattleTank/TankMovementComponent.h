@@ -32,7 +32,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendTurnRight(float Throw);
 
-	UTankMovementComponent();
 	virtual void BeginPlay() override;
 private:
 	// Called from the pathfinding logic by the AI controllers
@@ -55,7 +54,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* AudioDrive = nullptr;
 	
-	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UPROPERTY()
 	UAudioComponent* MovementAudioComponent = nullptr;
 
 	void TankIdleSoundActivate();

@@ -4,11 +4,6 @@
 #include "TankTrack.h"
 #include "TankMovementComponent.h"
 
-UTankMovementComponent::UTankMovementComponent()
-{
-	MovementAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("Movement"));
-	MovementAudioComponent->bAutoActivate = true;
-}
 
 void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
 {
@@ -22,6 +17,13 @@ void UTankMovementComponent::BeginPlay()
 	Super::BeginPlay();
 	InputBinding();
 	FindExhaustParticleSystem();
+	//Find MovementAudioComponent
+	MovementAudioComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankMovementAudioComponent")));
+	if (MovementAudioComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("MovementAudioComponent: %s"), *MovementAudioComponent->GetName());
+		//TankIdleSoundActivate();
+	}
 }
 
 void UTankMovementComponent::InputBinding()
@@ -33,8 +35,8 @@ void UTankMovementComponent::InputBinding()
 		InputComponentMovement->BindAxis("Move Forward", this, &UTankMovementComponent::IntendDrive);
 		InputComponentMovement->BindAxis("Turn Right", this, &UTankMovementComponent::IntendTurn);
 		//UE_LOG(LogTemp, Warning, TEXT("Input Component: %s"), *InputComponentMovement->GetFName().ToString()); // to test
-		InputComponentMovement->BindAction("DriveSound", IE_Pressed, this, &UTankMovementComponent::TankDriveSoundActivate);
-		InputComponentMovement->BindAction("DriveSound", IE_Released, this, &UTankMovementComponent::TankIdleSoundActivate);
+		//InputComponentMovement->BindAction("DriveSound", IE_Pressed, this, &UTankMovementComponent::TankDriveSoundActivate);
+		//InputComponentMovement->BindAction("DriveSound", IE_Released, this, &UTankMovementComponent::TankIdleSoundActivate);
 	}
 }
 void UTankMovementComponent::FindExhaustParticleSystem()
@@ -58,7 +60,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
 	IntendTurnRight(RightThrow);
 
-	TankDriveSounds();
+	//TankDriveSounds();
 }
 
 void UTankMovementComponent::IntendDrive(float Throw)
@@ -93,8 +95,7 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 
 void UTankMovementComponent::ExhaustActivate()
 {
-	if (!ExhaustSmokeComponent) { return; }
-	if (Drive != 0 || Turn != 0)
+	if (ExhaustSmokeComponent && (Drive != 0 || Turn != 0))
 	{
 		ExhaustSmokeComponent->Activate();
 	}
@@ -106,8 +107,7 @@ void UTankMovementComponent::ExhaustActivate()
 
 void UTankMovementComponent::TankDriveSounds()
 {
-	if (!MovementAudioComponent) { return; }
-	if (Drive != 0 || Turn != 0)
+	if (MovementAudioComponent && (Drive != 0 || Turn != 0))
 	{
 		MovementAudioComponent->Stop();
 		MovementAudioComponent->SetSound(AudioDrive);

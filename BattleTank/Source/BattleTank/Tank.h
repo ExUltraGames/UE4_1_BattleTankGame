@@ -14,6 +14,11 @@
 #include "Tank.generated.h" // Put new includes above
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+// Forward Declaration
+class UTankBarrel;
+class UTankTurret;
+class UTankMovementComponent;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -29,6 +34,35 @@ public:
 	float GetHealthPercent() const;
 
 	FTankDelegate OnDeath;// no () on this
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Components")
+	UTankTurret* TankTurret = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Components")
+	UTankBarrel* TankBarrel = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Components")
+	UTankMovementComponent* TankMovement = nullptr;
+	
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Components")
+	UTankAimingComponent* TankAiming = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* TurretAudioComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* BarrelAudioComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* TankMovementAudioComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* TankAimingAudioComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Sound")
+	UAudioComponent* TankReloadAudioComponent = nullptr;
+protected:
+
 
 private:
 	
@@ -99,6 +133,7 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UParticleSystemComponent* Exhaust = nullptr;
 
-	UPROPERTY()
-	USceneComponent* TankComponent = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* Tank = nullptr;
+
 }; 

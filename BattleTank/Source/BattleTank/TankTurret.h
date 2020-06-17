@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Components/AudioComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Sound/SoundBase.h"
 #include "TankTurret.generated.h"
 
 /**
@@ -15,16 +15,19 @@ class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-	UTankTurret();
+
 	// -1 is max downward speed, and +1 is max up movement
 	void RotateT(float RelativeSpeed);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* AudioTurret = nullptr;
 	
+protected:
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float MaxDegreesPerSecond = 25;
 
-	UPROPERTY(VisibleAnywhere, Category = "Sound")
-	UAudioComponent* TurretAudioComponent = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	float MinMaxTurnSound = 0.3f;
 };

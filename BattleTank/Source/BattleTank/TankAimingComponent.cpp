@@ -12,12 +12,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	//bWantsBeginPlay = true; // not needed in later versions // remove
 	PrimaryComponentTick.bCanEverTick = true;
-	//ProjectileBlueprint->ClassDefaultObject;
-	ReloadAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("Reload"));
-	ReloadAudioComponent->bAutoActivate = false;
-
 }
 
 void UTankAimingComponent::BeginPlay()
@@ -26,9 +21,27 @@ void UTankAimingComponent::BeginPlay()
 	
 	//BIND fire actions // remove from BP
 	InputBinding();
-	
+	//Find ReloadAudioComponent
+	ReloadAudioComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankReloadAudioComponent")));
+	if (!ReloadAudioComponent) { return; }
+	if (ReloadAudioComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ReloadAudioComponent: %s"), *ReloadAudioComponent->GetName());
+		//ReloadSound();
+	}
+
 	// So that first first is after initial reload
 	LastFireTime = FPlatformTime::Seconds();
+
+	//Find AudioBarrelComponent
+	AudioBarrelComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankAimingAudioComponent")));
+	if (!AudioBarrelComponent) { return; }
+	if (AudioBarrelComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AudioBarrelComponent: %s"), *AudioBarrelComponent->GetName());
+		//AudioBarrelComponent->Activate();
+		//AudioBarrelComponent->SetSound(AudioBarrel);
+	}
 }
 
 void UTankAimingComponent::InputBinding()
@@ -50,7 +63,6 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	FiringStateUI();
-	ReloadSound();
 }
 
 void UTankAimingComponent::FiringStateUI()
@@ -70,18 +82,6 @@ void UTankAimingComponent::FiringStateUI()
 	else
 	{
 		FiringState = EFiringState::Locked;
-	}
-}
-
-void UTankAimingComponent::ReloadSound()
-{
-	if (ReloadAudioComponent && ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds))
-	{
-		ReloadAudioComponent->Activate();
-	}
-	else
-	{
-		ReloadAudioComponent->Deactivate();
 	}
 }
 
@@ -128,8 +128,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	{
 		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
+		BarrelSoundStart(RelativeBarrelSpeed);
 	}
-	// If no solution found do nothing
+	// If no solution found do nothing // 
+	if (!bHaveAimSolution)
+	{
+		BarrelSoundStop();
+	}
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimInDirection)
@@ -140,26 +145,27 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimInDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimInDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	RelativeBarrelSpeed = DeltaRotator.Pitch;
+	RelativeTurretSpeed = DeltaRotator.Yaw;
 	float Elevation = Turret->RelativeRotation.Yaw;
 	if (Elevation <= FrontFiringDegreeRange && Elevation >= -FrontFiringDegreeRange)
 	{
-		Barrel->Elevate(DeltaRotator.Pitch, BarrelMinElevationFront);
+		Barrel->Elevate(RelativeBarrelSpeed, BarrelMinElevationFront);
 	}
 	else 
 	{
-		Barrel->Elevate(DeltaRotator.Pitch, BarrelMinElevation);
+		Barrel->Elevate(RelativeBarrelSpeed, BarrelMinElevation);
 	}
 	// always Yaw shortest route
 	
-	if (FMath::Abs(DeltaRotator.Yaw) < 180)//absolute value +or-
+	if (FMath::Abs(RelativeTurretSpeed) < 180)//absolute value +or-
 	{
-		Turret->RotateT(DeltaRotator.Yaw);
+		Turret->RotateT(RelativeTurretSpeed);
 	}
 	else
 	{
-		Turret->RotateT(-DeltaRotator.Yaw);
+		Turret->RotateT(-RelativeTurretSpeed);
 	}
-
 }
 
 void UTankAimingComponent::Fire()
@@ -183,7 +189,33 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 		RoundsLeft--;
+		ReloadSound();
 	}
+}
+
+void UTankAimingComponent::ReloadSound()
+{
+	if (ReloadAudioComponent)
+	{
+		ReloadAudioComponent->SetSound(AudioReload);
+		ReloadAudioComponent->Play();
+		
+	}
+}
+
+void UTankAimingComponent::BarrelSoundStart(float RelativeSpeed)
+{
+	if (AudioBarrelComponent && (RelativeSpeed >= MinMaxElevateSound || RelativeSpeed <= -MinMaxElevateSound))
+	{
+		AudioBarrelComponent->Play();
+		//UE_LOG(LogTemp, Warning, TEXT("AudioBarrelComponent: %s"), *AudioBarrelComponent->GetName());
+	}
+}
+
+void UTankAimingComponent::BarrelSoundStop()
+{
+	if (!AudioBarrelComponent) { return; }
+	AudioBarrelComponent->Stop();
 }
 
 

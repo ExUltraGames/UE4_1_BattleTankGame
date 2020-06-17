@@ -4,6 +4,7 @@
 
 #include "Components/AudioComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Sound/SoundBase.h"
 #include "TankBarrel.generated.h"
 
 /**
@@ -15,10 +16,20 @@ class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-	UTankBarrel();
-
 	// -1 is max downward speed, and +1 is max up movement
+	
 	void Elevate(float RelativeSpeed, float MinElevationDegrees);
+
+	void BarrelSoundStart(float RelativeSpeed);
+
+	void BarrelSoundStop();
+
+	UPROPERTY()
+	UAudioComponent* AudioBarrelComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+	USoundBase* AudioBarrel = nullptr;
+protected:
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
@@ -27,8 +38,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float MaxElevationDegrees = 40;
 
-	UPROPERTY(VisibleAnywhere, Category = "Sound")
-	UAudioComponent* BarrelAudioComponent = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	float MinMaxElevateSound = 0.3f;
 
