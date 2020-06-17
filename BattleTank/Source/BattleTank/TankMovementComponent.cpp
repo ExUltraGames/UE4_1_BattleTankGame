@@ -21,8 +21,9 @@ void UTankMovementComponent::BeginPlay()
 	MovementAudioComponent = Cast<UAudioComponent>(GetOwner()->GetDefaultSubobjectByName(FName("TankMovementAudioComponent")));
 	if (MovementAudioComponent)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("MovementAudioComponent: %s"), *MovementAudioComponent->GetName());
-		//TankIdleSoundActivate();
+		MovementAudioComponent->Activate();
+		//UE_LOG(LogTemp, Warning, TEXT("MovementAudioComponent: %s"), *MovementAudioComponent->GetName());
+		TankIdleSoundActivate();
 	}
 }
 
@@ -35,8 +36,8 @@ void UTankMovementComponent::InputBinding()
 		InputComponentMovement->BindAxis("Move Forward", this, &UTankMovementComponent::IntendDrive);
 		InputComponentMovement->BindAxis("Turn Right", this, &UTankMovementComponent::IntendTurn);
 		//UE_LOG(LogTemp, Warning, TEXT("Input Component: %s"), *InputComponentMovement->GetFName().ToString()); // to test
-		//InputComponentMovement->BindAction("DriveSound", IE_Pressed, this, &UTankMovementComponent::TankDriveSoundActivate);
-		//InputComponentMovement->BindAction("DriveSound", IE_Released, this, &UTankMovementComponent::TankIdleSoundActivate);
+		InputComponentMovement->BindAction("DriveSound", IE_Pressed, this, &UTankMovementComponent::TankDriveSoundActivate);
+		InputComponentMovement->BindAction("DriveSound", IE_Released, this, &UTankMovementComponent::TankIdleSoundActivate);
 	}
 }
 void UTankMovementComponent::FindExhaustParticleSystem()
@@ -60,21 +61,21 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
 	IntendTurnRight(RightThrow);
 
-	//TankDriveSounds();
+	TankDriveSounds();
 }
 
 void UTankMovementComponent::IntendDrive(float Throw)
 {
 	IntendMoveForward(Throw);
 	ExhaustActivate();
-	//TankDriveSounds(); //doesn't work for non-ai tank // use key binding???? // order of compile??
+	//TankDriveSounds(); //BEING CALLED but no sound played
 }
 
 void UTankMovementComponent::IntendTurn(float Throw)
 {
 	IntendTurnRight(Throw);
 	ExhaustActivate();
-	//TankDriveSounds(); //doesn't work for non-ai tank // use key binding???? // order of compile??
+	//TankDriveSounds(); //BEING CALLED but no sound played
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)//float throw -1 to +1 comes from the BindAxis
@@ -109,13 +110,13 @@ void UTankMovementComponent::TankDriveSounds()
 {
 	if (MovementAudioComponent && (Drive != 0 || Turn != 0))
 	{
-		MovementAudioComponent->Stop();
+		UE_LOG(LogTemp, Warning, TEXT("TankDriveSound"));
 		MovementAudioComponent->SetSound(AudioDrive);
 		MovementAudioComponent->Play();
 	}
 	else
 	{
-		MovementAudioComponent->Stop();
+		UE_LOG(LogTemp, Warning, TEXT("TankIdleSound"));
 		MovementAudioComponent->SetSound(AudioIdle);
 		MovementAudioComponent->Play();
 	}
@@ -124,6 +125,7 @@ void UTankMovementComponent::TankDriveSounds()
 void UTankMovementComponent::TankDriveSoundActivate()
 {
 	if (!MovementAudioComponent) { return; }
+	//UE_LOG(LogTemp, Warning, TEXT("TankDriveSoundActivate"));
 	MovementAudioComponent->Stop();
 	MovementAudioComponent->SetSound(AudioDrive);
 	MovementAudioComponent->Play();
@@ -131,6 +133,7 @@ void UTankMovementComponent::TankDriveSoundActivate()
 void UTankMovementComponent::TankIdleSoundActivate()
 {
 	if (!MovementAudioComponent) { return; }
+	//UE_LOG(LogTemp, Warning, TEXT("TankIdleSoundActivate"));
 	MovementAudioComponent->Stop();
 	MovementAudioComponent->SetSound(AudioIdle);
 	MovementAudioComponent->Play();
