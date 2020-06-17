@@ -135,3 +135,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * Tank ReBuild and Refactor of Audio code and components
 * Refactor Movement sounds complete
 * Refactor Barrel, Turret and ALL sounds complete
+* Refactor of Barrel turret sounds to Controller

@@ -35,6 +35,8 @@ public:
 
 	FTankDelegate OnDeath;// no () on this
 
+
+protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Components")
 	UTankTurret* TankTurret = nullptr;
 
@@ -64,8 +66,6 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, Category = "Sound")
 	UAudioComponent* TankTurretAudioComponent = nullptr;
-
-protected:
 
 
 private:

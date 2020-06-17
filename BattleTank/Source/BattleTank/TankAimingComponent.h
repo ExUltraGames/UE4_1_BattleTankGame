@@ -43,20 +43,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int32 GetRoundsLeft() const;
 
+	void BarrelSoundStart();
+	void BarrelAimingSoundStop();
+	void TurretSoundStart();
+	void TurretAimingSoundStop();
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
+	
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
 	void ReloadSound();
-	
-	void BarrelSoundStart(float RelativeSpeed);
-
-	void TurretSoundStart(float RelativeSpeed);
 
 	float RelativeBarrelSpeed;
 	float RelativeTurretSpeed;
@@ -78,6 +79,8 @@ private:
 	void MoveBarrelTowards(FVector AimInDirection);
 
 	bool IsBarrelMoving();
+
+	bool bHaveAimSolution;
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;

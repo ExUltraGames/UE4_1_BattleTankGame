@@ -114,7 +114,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
-	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
+	bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
 	(
 		this,
 		OutLaunchVelocity,
@@ -131,8 +131,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	{
 		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		BarrelSoundStart(RelativeBarrelSpeed);
-		TurretSoundStart(RelativeTurretSpeed);
 	}
 	// If no solution found do nothing // 
 }
@@ -189,21 +187,20 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 		RoundsLeft--;
-		ReloadSound();
 	}
+		ReloadSound(); // moved down so happens everytime fire otherwise only locked or aiming
 }
 
 void UTankAimingComponent::ReloadSound()
 {
-	if (ReloadAudioComponent)
-	{
+	if (!ReloadAudioComponent) { return; }
+		ReloadAudioComponent->Deactivate();
 		ReloadAudioComponent->Activate();
-	}
 }
 
-void UTankAimingComponent::BarrelSoundStart(float RelativeSpeed)
+void UTankAimingComponent::BarrelSoundStart()
 {
-	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
+	float RelativeSpeed = FMath::Clamp<float>(RelativeBarrelSpeed, -1, +1);
 	if (!AudioBarrelComponent) { return; }
 	if (RelativeSpeed >= MinMaxElevateSound || RelativeSpeed <= -MinMaxElevateSound)
 	{
@@ -217,18 +214,29 @@ void UTankAimingComponent::BarrelSoundStart(float RelativeSpeed)
 	}
 }
 
-void UTankAimingComponent::TurretSoundStart(float RelativeSpeed)
+void UTankAimingComponent::TurretSoundStart()
 {
-	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
+	float RelativeSpeed = FMath::Clamp<float>(RelativeTurretSpeed, -1, +1);
 	if (!AudioTurretComponent) { return; }
 	if (RelativeSpeed >= MinMaxTurretSound || RelativeSpeed <= -MinMaxTurretSound)
 	{
 		AudioTurretComponent->Activate();
-		//UE_LOG(LogTemp, Warning, TEXT("RelativeTurretSpeed: %f"), RelativeSpeed);
 	}
 	else
 	{
 		AudioTurretComponent->Deactivate();
 	}
+}
+
+void UTankAimingComponent::BarrelAimingSoundStop()
+{
+	if (!AudioBarrelComponent) { return; }
+	AudioBarrelComponent->Deactivate();
+}
+
+void UTankAimingComponent::TurretAimingSoundStop()
+{
+	if (!AudioTurretComponent) { return; }
+	AudioTurretComponent->Deactivate();
 }
 

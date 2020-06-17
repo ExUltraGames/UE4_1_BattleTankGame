@@ -49,6 +49,13 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (bGotHitLocation) // Has "side-effect", is going to line trace
 	{
 		AimingComponent->AimAt(HitLocation);
+		AimingComponent->BarrelSoundStart();
+		AimingComponent->TurretSoundStart();
+	}
+	if (!bGotHitLocation)
+	{
+		AimingComponent->BarrelAimingSoundStop();
+		AimingComponent->TurretAimingSoundStop();
 	}
 }
 

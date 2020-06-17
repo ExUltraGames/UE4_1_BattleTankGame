@@ -42,10 +42,7 @@ ATank::ATank()
 	TankTurretAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankTurretAudioComponent"));
 	TankTurretAudioComponent->bAutoActivate = false;
 	
-
-	//this doesn't work as Cpp is compiled before the BP, no root component!
-	//TankComponent = FindComponentByClass<USceneComponent>();
-	//if (!TankComponent) { return; }
+	//could add exhaust component too
 	//Exhaust = CreateDefaultSubobject<UParticleSystemComponent>(FName("Exhaust"));
 	//Exhaust->SetupAttachment(RootComponent, TEXT("Exhaust"));
 }
