@@ -11,9 +11,11 @@
 #include "Math/UnrealMathUtility.h"
 #include "UObject/Object.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "PhysicsEngine/PhysicsConstraintComponent.h"
 #include "Tank.generated.h" // Put new includes above
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 // Forward Declaration
 class UTankBarrel;
 class UTankTurret;
@@ -92,6 +94,8 @@ private:
 
 	void InputBinding();
 
+	void SetupConstraints();
+
 	UPROPERTY()
 	UInputComponent* InputComponentCameraBinding = nullptr;
 
@@ -139,5 +143,11 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* Tank = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPhysicsConstraintComponent* TurretPhysicsConstraint = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPhysicsConstraintComponent* BarrelPhysicsConstraint = nullptr;
 
 }; 

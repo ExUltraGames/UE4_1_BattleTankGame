@@ -24,11 +24,22 @@ ATank::ATank()
 	Tank->SetCollisionObjectType(ECollisionChannel::ECC_PhysicsBody);
 	Tank->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
 
+	//TurretPhysicsConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("TurretPhysicsConstraint"));
+	//TurretPhysicsConstraint->SetupAttachment(Tank, FName("Turret"));
+
 	TankTurret = CreateDefaultSubobject<UTankTurret>(FName("TankTurret"));
 	TankTurret->SetupAttachment(Tank, FName("Turret"));
+	TankTurret->SetSimulatePhysics(false);
+	//auto TurretSocket = TankTurret->GetAttachSocketName();
+	//UE_LOG(LogTemp, Warning, TEXT("TurretSocket: %s"), *TurretSocket.ToString());
+
+	//BarrelPhysicsConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("BarrelPhysicsConstraint"));
+	//BarrelPhysicsConstraint->SetupAttachment(Tank, FName("Turret"));
 
 	TankBarrel = CreateDefaultSubobject<UTankBarrel>(FName("TankBarrel"));
 	TankBarrel->SetupAttachment(TankTurret, FName("Barrel"));
+	TankBarrel->SetSimulatePhysics(false);
+
 
 	TankMovement = CreateDefaultSubobject<UTankMovementComponent>(FName("TankMovement"));
 	TankMovementAudioComponent = CreateDefaultSubobject<UAudioComponent>(FName("TankMovementAudioComponent"));
@@ -52,6 +63,7 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 	CurrentHealth = StartingHealth;
 	InputBinding();
+	//SetupConstraints();
 }
 
 
@@ -65,6 +77,12 @@ void ATank::InputBinding()
 		InputComponentCameraBinding->BindAxis("AimAltitude", this, &ATank::RotateCameraPitch);
 		//UE_LOG(LogTemp, Warning, TEXT("AimAzimuth Component found")); // to test
 	}
+}
+
+void ATank::SetupConstraints()
+{
+	//TurretPhysicsConstraint->SetConstrainedComponents(Tank, NAME_None, TankTurret, NAME_None);
+	BarrelPhysicsConstraint->SetConstrainedComponents(TankTurret, NAME_None, TankBarrel, NAME_None);
 }
 
 void ATank::RotateCameraYaw(float AxisValue)

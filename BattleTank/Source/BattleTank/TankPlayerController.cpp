@@ -28,7 +28,7 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
-	FoundAimingComponent(AimingComponent);
+	FoundAimingComponent(AimingComponent); // for use in BP and UI
 }
 
 void ATankPlayerController::Tick(float DeltaTime)

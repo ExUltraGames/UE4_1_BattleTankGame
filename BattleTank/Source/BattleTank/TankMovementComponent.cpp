@@ -17,7 +17,6 @@ void UTankMovementComponent::BeginPlay()
 	Super::BeginPlay();
 	InputBinding();
 	FindExhaustParticleSystem();
-	//Find MovementAudioComponent
 	FindMovementAudioComponent();
 }
 
