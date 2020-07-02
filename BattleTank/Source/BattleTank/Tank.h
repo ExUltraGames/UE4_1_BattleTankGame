@@ -69,7 +69,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Sound")
 	UAudioComponent* TankTurretAudioComponent = nullptr;
 
-
 private:
 	
 	ATank();

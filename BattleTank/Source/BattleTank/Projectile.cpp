@@ -92,15 +92,30 @@ void AProjectile::OnTimerExpire()
 
 void AProjectile::ImpactBlastActivate()
 {
+	if (ImpactBlastSFX)
+	{
 	AudioComponent->SetSound(ImpactBlastSFX);
 	AudioComponent->Play();
+	}
+
+	if (ImpactShake)
+	{
+		GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(FireShake, 1);
+	}
 }
 
 void AProjectile::LaunchBlastActivate()
 {
+	if (LaunchBlastSFX)
+	{
 	AudioComponent->SetSound(LaunchBlastSFX);
 	AudioComponent->Play();
 	bLaunch = true;
+	}
+	if (FireShake)
+	{
+		GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(FireShake, 1);
+	}
 }
 
 void AProjectile::WhistleActivate()

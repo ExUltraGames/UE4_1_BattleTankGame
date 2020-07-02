@@ -137,3 +137,4 @@ World -> tank-> control -> player 2 (AI or human) -> User Interface (UI) -> worl
 * Refactor Barrel, Turret and ALL sounds complete
 * Refactor of Barrel turret sounds to Controller
 * Battle Tank Complete 26/6/20
+* Added CameraShake Onfire & Onhit projectile

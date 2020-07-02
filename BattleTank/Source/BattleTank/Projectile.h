@@ -30,7 +30,7 @@ public:
 	void LaunchProjectile(float Speed);
 
 private:
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -63,6 +63,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float ProjectileDamage = 20.f;
 
+	//Effects
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	USoundBase* ImpactBlastSFX = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
@@ -76,4 +77,9 @@ private:
 	void WhistleActivate();
 	bool bLaunch = false;
 	bool bWhistle = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UCameraShake> FireShake;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UCameraShake> ImpactShake;
 };
